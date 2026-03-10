@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smashed Burger in Pizza Dough &mdash; Pour 2</title>
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.7;
+      color: #2d2d2d;
+      background: #faf8f5;
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 16px 60px;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      margin: 20px 0 32px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      background: linear-gradient(135deg, #d4a574 0%, #8B4513 50%, #c0392b 100%);
+      height: 340px;
+      display: flex;
+      align-items: flex-end;
+    }
+    .hero-illustration {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -55%);
+      width: 280px;
+      height: 200px;
+      opacity: 0.55;
+    }
+    .hero-illustration svg {
+      width: 100%;
+      height: 100%;
+    }
+    .hero-overlay {
+      position: relative;
+      width: 100%;
+      background: linear-gradient(transparent, rgba(0,0,0,0.75));
+      padding: 60px 24px 20px;
+      color: #fff;
+    }
+    .hero-overlay h1 {
+      font-size: 1.65rem;
+      font-weight: 800;
+      line-height: 1.3;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    .hero-overlay .subtitle {
+      font-size: 0.95rem;
+      opacity: 0.9;
+      margin-top: 4px;
+    }
+
+    /* ===== META BADGES ===== */
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .badge {
+      background: #fff;
+      border: 1px solid #e8e2da;
+      border-radius: 12px;
+      padding: 12px 18px;
+      flex: 1;
+      min-width: 120px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .badge .label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: #888; }
+    .badge .value { font-size: 1.15rem; font-weight: 700; color: #c0392b; margin-top: 2px; }
+
+    /* ===== SECTIONS ===== */
+    h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #c0392b;
+      margin: 36px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 3px solid #f0ddd5;
+    }
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #555;
+      margin: 20px 0 8px;
+    }
+
+    /* ===== NUTRITION TABLE ===== */
+    .nutrition-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 16px 0 10px;
+    }
+    .nutri-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 14px 10px;
+      text-align: center;
+      border: 1px solid #e8e2da;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+    .nutri-card .nutri-val { font-size: 1.3rem; font-weight: 800; color: #c0392b; }
+    .nutri-card .nutri-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.8px; color: #888; margin-top: 2px; }
+    .nutri-note {
+      font-size: 0.85rem;
+      color: #777;
+      background: #f9f5f0;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border-left: 4px solid #e8c9a0;
+      margin: 10px 0 0;
+    }
+
+    /* ===== INGREDIENTS ===== */
+    .ingredients-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .ingredient-group {
+      background: #fff;
+      border-radius: 12px;
+      padding: 18px;
+      border: 1px solid #e8e2da;
+    }
+    .ingredient-group h3 {
+      margin: 0 0 10px;
+      font-size: 0.9rem;
+      color: #c0392b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .ingredient-group ul { list-style: none; padding: 0; }
+    .ingredient-group li {
+      padding: 4px 0;
+      font-size: 0.92rem;
+      border-bottom: 1px dashed #f0ebe5;
+    }
+    .ingredient-group li:last-child { border-bottom: none; }
+    .ingredient-group li::before {
+      content: '•';
+      color: #c0392b;
+      font-weight: bold;
+      margin-right: 8px;
+    }
+    .optional { color: #999; font-style: italic; font-size: 0.85rem; }
+
+    /* ===== STEPS ===== */
+    .step {
+      background: #fff;
+      border-radius: 14px;
+      margin: 20px 0;
+      overflow: hidden;
+      border: 1px solid #e8e2da;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.04);
+    }
+    .step-img {
+      width: 100%;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .step-img svg {
+      height: 75%;
+      width: auto;
+      filter: drop-shadow(0 4px 16px rgba(0,0,0,0.25));
+    }
+    .step-body { padding: 20px 22px; }
+    .step-number {
+      display: inline-block;
+      background: #c0392b;
+      color: #fff;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 32px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+    .step-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #333;
+      display: inline;
+      vertical-align: middle;
+    }
+    .step-time {
+      display: inline-block;
+      background: #fdf0e6;
+      color: #c0392b;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+    .step-text {
+      margin-top: 14px;
+      font-size: 0.95rem;
+      color: #444;
+      line-height: 1.75;
+    }
+    .step-text ul { margin: 8px 0 0 18px; }
+    .step-text li { margin-bottom: 4px; }
+    .step-tip {
+      margin-top: 14px;
+      background: #f9f5f0;
+      border-left: 4px solid #e8c9a0;
+      padding: 10px 14px;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.88rem;
+      color: #666;
+    }
+    .step-tip strong { color: #b5651d; }
+
+    /* ===== DIAGRAM ===== */
+    .diagram-container {
+      background: #fff;
+      border-radius: 14px;
+      margin: 20px 0;
+      padding: 24px;
+      border: 1px solid #e8e2da;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.04);
+    }
+    .diagram-container h3 {
+      text-align: center;
+      color: #c0392b;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+    .diagram-subtitle {
+      text-align: center;
+      color: #888;
+      font-size: 0.82rem;
+      margin-bottom: 24px;
+    }
+    .diagram-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+    .diagram-cell {
+      text-align: center;
+    }
+    .diagram-cell svg {
+      width: 100%;
+      max-width: 220px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+    .diagram-label {
+      margin-top: 10px;
+      font-size: 0.82rem;
+      color: #555;
+      line-height: 1.4;
+    }
+    .diagram-label strong {
+      color: #c0392b;
+      font-size: 0.88rem;
+    }
+    .diagram-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      grid-column: 1 / -1;
+    }
+    .diagram-arrow svg { width: 100%; max-width: 600px; height: 24px; }
+    .diagram-legend {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+      padding: 10px 0;
+      border-top: 1px dashed #e8e2da;
+      font-size: 0.78rem;
+      color: #777;
+    }
+    .diagram-legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .legend-swatch {
+      display: inline-block;
+      width: 14px;
+      height: 10px;
+      border-radius: 3px;
+    }
+
+    /* ===== TIPS ===== */
+    .tips-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .tip-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid #e8e2da;
+    }
+    .tip-card .tip-icon { font-size: 1.5rem; margin-bottom: 6px; }
+    .tip-card .tip-title { font-weight: 700; font-size: 0.9rem; color: #333; margin-bottom: 4px; }
+    .tip-card .tip-desc { font-size: 0.85rem; color: #666; line-height: 1.5; }
+
+    /* ===== PORTIONING ===== */
+    .portion-box {
+      background: linear-gradient(135deg, #fdf0e6, #fff5eb);
+      border: 2px solid #e8c9a0;
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin: 20px 0;
+    }
+    .portion-box h3 { color: #b5651d; margin: 0 0 10px; font-size: 1rem; }
+    .portion-box p { font-size: 0.92rem; color: #555; }
+    .portion-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 0.88rem;
+    }
+    .portion-table th, .portion-table td {
+      padding: 8px 12px;
+      text-align: center;
+      border-bottom: 1px solid #e0d5c8;
+    }
+    .portion-table th { font-weight: 700; color: #b5651d; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; }
+    .portion-table td { color: #555; }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #bbb;
+      border-top: 1px solid #e8e2da;
+      padding-top: 16px;
+    }
+
+    /* ===== PRINT STYLES ===== */
+    @media print {
+      body { background: #fff; padding: 0; max-width: 100%; }
+      .hero { box-shadow: none; margin-top: 0; }
+      .step { break-inside: avoid; box-shadow: none; }
+      .badge { box-shadow: none; }
+      .nutrition-grid { break-inside: avoid; }
+      .tips-grid { break-inside: avoid; }
+      .ingredient-group { break-inside: avoid; }
+      .diagram-container { break-inside: avoid; }
+      .diagram-grid { grid-template-columns: 1fr 1fr 1fr; }
+    }
+
+    /* ===== RESPONSIVE — TABLET ===== */
+    @media (max-width: 768px) {
+      body { padding: 0 12px 40px; }
+      .hero { margin: 12px 0 20px; border-radius: 12px; height: 240px; }
+      .hero-illustration { width: 200px; height: 140px; }
+      .hero-overlay { padding: 30px 16px 16px; }
+      .hero-overlay h1 { font-size: 1.35rem; }
+      .hero-overlay .subtitle { font-size: 0.85rem; }
+      h2 { font-size: 1.2rem; margin: 28px 0 12px; }
+      .meta-row { gap: 8px; }
+      .badge { padding: 10px 12px; min-width: 0; }
+      .badge .value { font-size: 1rem; }
+      .step-body { padding: 16px; }
+      .step-img { height: 170px; }
+      .step-title { font-size: 1rem; }
+      .step-text { font-size: 0.9rem; }
+      .step-text ul { margin-left: 14px; }
+      .portion-box { padding: 16px; }
+      .diagram-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ===== RESPONSIVE — PHONE ===== */
+    @media (max-width: 480px) {
+      body { padding: 0 10px 32px; line-height: 1.6; }
+
+      .hero { margin: 8px -10px 16px; border-radius: 0; height: 200px; }
+      .hero-illustration { width: 160px; height: 110px; }
+      .hero-overlay { padding: 24px 14px 14px; }
+      .hero-overlay h1 { font-size: 1.15rem; line-height: 1.35; }
+      .hero-overlay .subtitle { font-size: 0.8rem; line-height: 1.4; }
+
+      .meta-row { 
+        display: grid; 
+        grid-template-columns: 1fr 1fr; 
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+      .badge { padding: 10px 8px; border-radius: 10px; min-width: 0; }
+      .badge .label { font-size: 0.65rem; letter-spacing: 0.5px; }
+      .badge .value { font-size: 1rem; }
+
+      h2 { font-size: 1.1rem; margin: 24px 0 10px; padding-bottom: 6px; }
+      h3 { font-size: 0.95rem; }
+
+      .nutrition-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .nutri-card { padding: 12px 8px; border-radius: 10px; }
+      .nutri-card .nutri-val { font-size: 1.15rem; }
+      .nutri-card .nutri-label { font-size: 0.65rem; }
+      .nutri-note { font-size: 0.8rem; padding: 8px 12px; }
+
+      .portion-box { padding: 14px; border-radius: 10px; margin: 14px 0; }
+      .portion-box h3 { font-size: 0.9rem; }
+      .portion-box p { font-size: 0.85rem; }
+      .portion-table { font-size: 0.72rem; }
+      .portion-table th, .portion-table td { padding: 5px 4px; }
+      .portion-table th { font-size: 0.65rem; letter-spacing: 0; }
+
+      .ingredients-section { grid-template-columns: 1fr; gap: 10px; }
+      .ingredient-group { padding: 14px; border-radius: 10px; }
+      .ingredient-group h3 { font-size: 0.82rem; margin-bottom: 8px; }
+      .ingredient-group li { font-size: 0.87rem; padding: 3px 0; }
+
+      .step { margin: 14px -10px; border-radius: 0; border-left: none; border-right: none; }
+      .step-img { height: 140px; }
+      .step-body { padding: 14px 14px 16px; }
+      .step-number { width: 28px; height: 28px; line-height: 28px; font-size: 0.82rem; margin-right: 8px; }
+      .step-title { font-size: 0.95rem; }
+      .step-time { font-size: 0.7rem; padding: 2px 8px; margin-left: 6px; }
+      .step-text { font-size: 0.88rem; margin-top: 10px; line-height: 1.65; }
+      .step-text ul { margin: 6px 0 0 12px; }
+      .step-text li { margin-bottom: 6px; }
+      .step-tip { font-size: 0.82rem; padding: 8px 12px; margin-top: 10px; }
+
+      .tips-grid { grid-template-columns: 1fr; gap: 10px; }
+      .tip-card { padding: 14px; border-radius: 10px; }
+      .tip-card .tip-icon { font-size: 1.3rem; }
+      .tip-card .tip-title { font-size: 0.85rem; }
+      .tip-card .tip-desc { font-size: 0.82rem; }
+
+      .diagram-container { padding: 10px; margin: 14px -10px; border-radius: 0; }
+      .diagram-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .diagram-label { font-size: 0.75rem; }
+
+      .footer { margin-top: 24px; font-size: 0.75rem; }
+    }
+    .back-home {
+      display: inline-block;
+      margin: 16px 0 0;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #555;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back-home:hover { color: #000; }
+    .back-home::before { content: '\2190\00a0'; }
+  </style>
+</head>
+<body>
+
+  <a class="back-home" href="index.html">All Recipes</a>
+
+  <!-- ===== HERO ===== -->
+  <div class="hero">
+    <div class="hero-illustration">
+      <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg">
+        <!-- Plate -->
+        <ellipse cx="140" cy="170" rx="100" ry="22" fill="#e8e2da" opacity="0.3"/>
+        <!-- Whole burger dome -->
+        <defs>
+          <linearGradient id="heroGold" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#daa520"/>
+            <stop offset="50%" stop-color="#e8c44a"/>
+            <stop offset="100%" stop-color="#f5deb3"/>
+          </linearGradient>
+        </defs>
+        <path d="M 65 160 Q 65 55 140 40 Q 215 55 215 160 Z" fill="url(#heroGold)" stroke="#c9960a" stroke-width="2.5"/>
+        <!-- Sesame seeds -->
+        <ellipse cx="100" cy="80" rx="4" ry="7" fill="#c9a96e" transform="rotate(-20 100 80)"/>
+        <ellipse cx="130" cy="60" rx="4" ry="7" fill="#c9a96e" transform="rotate(15 130 60)"/>
+        <ellipse cx="160" cy="72" rx="4" ry="7" fill="#c9a96e" transform="rotate(-10 160 72)"/>
+        <ellipse cx="110" cy="105" rx="4" ry="7" fill="#c9a96e" transform="rotate(25 110 105)"/>
+        <ellipse cx="170" cy="100" rx="4" ry="7" fill="#c9a96e" transform="rotate(-15 170 100)"/>
+        <ellipse cx="140" cy="90" rx="4" ry="7" fill="#c9a96e" transform="rotate(5 140 90)"/>
+        <ellipse cx="90" cy="120" rx="4" ry="7" fill="#c9a96e" transform="rotate(18 90 120)"/>
+        <ellipse cx="185" cy="118" rx="4" ry="7" fill="#c9a96e" transform="rotate(-22 185 118)"/>
+        <!-- Shine -->
+        <ellipse cx="115" cy="90" rx="20" ry="35" fill="#fff" opacity="0.12"/>
+        <!-- Seam on top -->
+        <path d="M 105 46 Q 140 35 175 46" stroke="#b5651d" stroke-width="2" fill="none" stroke-dasharray="6 4"/>
+        <!-- Steam -->
+        <path d="M 110 30 Q 105 15 115 4" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.4" stroke-linecap="round"/>
+        <path d="M 140 25 Q 135 10 145 0" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.5" stroke-linecap="round"/>
+        <path d="M 170 30 Q 165 15 175 4" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.4" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="hero-overlay">
+      <h1>Smashed Burger in Pizza Dough</h1>
+      <div class="subtitle">Crispy smashed steaks, caramelized toppings, wrapped in golden pizza dough &mdash; Pour 2 burgers</div>
+    </div>
+  </div>
+
+  <!-- ===== META BADGES ===== -->
+  <div class="meta-row">
+    <div class="badge">
+      <div class="label">Prep Time</div>
+      <div class="value">20 min</div>
+    </div>
+    <div class="badge">
+      <div class="label">Cook Time</div>
+      <div class="value">25 min</div>
+    </div>
+    <div class="badge">
+      <div class="label">Total Time</div>
+      <div class="value">~45 min</div>
+    </div>
+    <div class="badge">
+      <div class="label">Servings</div>
+      <div class="value">2</div>
+    </div>
+  </div>
+
+  <!-- ===== NUTRITION ===== -->
+  <h2>&#x1F4CA; Nutrition (approximate per serving)</h2>
+  <div class="nutrition-grid">
+    <div class="nutri-card">
+      <div class="nutri-val">~550</div>
+      <div class="nutri-label">Calories</div>
+    </div>
+    <div class="nutri-card">
+      <div class="nutri-val">~38g</div>
+      <div class="nutri-label">Protein</div>
+    </div>
+    <div class="nutri-card">
+      <div class="nutri-val">~45g</div>
+      <div class="nutri-label">Carbs</div>
+    </div>
+    <div class="nutri-card">
+      <div class="nutri-val">~22g</div>
+      <div class="nutri-label">Fat</div>
+    </div>
+  </div>
+  <div class="nutri-note">
+    &#x1F4DD; <strong>5% fat steak hach&eacute;</strong> keeps the protein high and fat lower than regular ground beef.
+    Values are approximate &mdash; will vary with optional toppings, dough brand, and sauce amounts.
+    Without optional toppings (onions, mushrooms, pickles, etc.)
+  </div>
+
+  <!-- ===== PORTIONING ===== -->
+  <div class="portion-box">
+    <h3>&#x1F37D;&#xFE0F; Serving Portions</h3>
+    <p>This recipe makes <strong>2 wrapped burgers</strong> &mdash; 1 larger and 1 slightly smaller:</p>
+    <table class="portion-table">
+      <thead>
+        <tr>
+          <th>Burger</th>
+          <th>Steak weight</th>
+          <th>Size</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>&#x1F7E2; Burger #1</td>
+          <td>225g</td>
+          <td>Large</td>
+        </tr>
+        <tr>
+          <td>&#x1F7E1; Burger #2</td>
+          <td>175g</td>
+          <td>Regular</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== INGREDIENTS ===== -->
+  <h2>&#x1F6D2; Ingredients</h2>
+  <div class="ingredients-section">
+    <div class="ingredient-group">
+      <h3>&#x1F969; Burger Steaks</h3>
+      <ul>
+        <li>400g steak hach&eacute; 5% mati&egrave;re grasse</li>
+        <li>Olive oil (or neutral oil)</li>
+        <li>Salt &amp; black pepper</li>
+        <li>Piment de Cayenne <span class="optional">(optional)</span></li>
+      </ul>
+    </div>
+    <div class="ingredient-group">
+      <h3>&#x1F355; Dough &amp; Finish</h3>
+      <ul>
+        <li>Pizza dough (store-bought or homemade)</li>
+        <li>Egg yolk <span class="optional">(optional &mdash; for brushing)</span></li>
+        <li>Sesame seeds <span class="optional">(optional)</span></li>
+      </ul>
+    </div>
+    <div class="ingredient-group">
+      <h3>&#x1F9C5; Caramelized Toppings</h3>
+      <ul>
+        <li>Onion(s), sliced <span class="optional">(optional)</span></li>
+        <li>Mushrooms, sliced <span class="optional">(optional)</span></li>
+        <li>Olive oil</li>
+        <li>Salt &amp; pepper</li>
+        <li>Herbes de Provence <span class="optional">(optional)</span></li>
+      </ul>
+    </div>
+    <div class="ingredient-group">
+      <h3>&#x1F952; Sauces &amp; Extras</h3>
+      <ul>
+        <li>Mayonnaise <span class="optional">(optional)</span></li>
+        <li>Mustard <span class="optional">(optional)</span></li>
+        <li>Ketchup <span class="optional">(optional)</span></li>
+        <li>Pickles, sliced <span class="optional">(optional)</span></li>
+        <li>Dried tomatoes <span class="optional">(optional)</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== INSTRUCTIONS ===== -->
+  <h2>&#x1F468;&#x200D;&#x1F373; Step-by-Step Instructions</h2>
+
+  <!-- STEP 1 -->
+  <div class="step">
+    <div class="step-img" style="background: linear-gradient(135deg, #2c1810 0%, #5a2d0c 40%, #c0392b 100%);">
+      <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+        <!-- Pan -->
+        <ellipse cx="100" cy="95" rx="75" ry="18" fill="#444"/>
+        <rect x="25" y="77" width="150" height="18" rx="2" fill="#555"/>
+        <ellipse cx="100" cy="77" rx="75" ry="18" fill="#666"/>
+        <ellipse cx="100" cy="77" rx="68" ry="14" fill="#333"/>
+        <!-- Pan handle -->
+        <rect x="170" y="72" width="28" height="10" rx="4" fill="#777"/>
+        <!-- Smashed patty -->
+        <ellipse cx="100" cy="74" rx="42" ry="8" fill="#6b3020"/>
+        <ellipse cx="100" cy="72" rx="40" ry="7" fill="#8B4513"/>
+        <!-- Sear marks -->
+        <line x1="70" y1="72" x2="80" y2="72" stroke="#3d1f0d" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="90" y1="71" x2="100" y2="71" stroke="#3d1f0d" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="110" y1="72" x2="122" y2="72" stroke="#3d1f0d" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Steam wisps -->
+        <path d="M 75 60 Q 72 48 78 38" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.5" stroke-linecap="round"/>
+        <path d="M 100 58 Q 97 44 103 32" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.6" stroke-linecap="round"/>
+        <path d="M 122 60 Q 119 48 125 36" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.4" stroke-linecap="round"/>
+        <!-- Spatula pressing -->
+        <rect x="54" y="18" width="8" height="46" rx="2" fill="#bbb" transform="rotate(-12 58 38)"/>
+        <rect x="48" y="56" width="22" height="4" rx="2" fill="#999" transform="rotate(-12 58 58)"/>
+        <!-- Small sizzle dots -->
+        <circle cx="65" cy="68" r="1" fill="#ff6" opacity="0.7"/>
+        <circle cx="132" cy="70" r="1.2" fill="#ff6" opacity="0.6"/>
+        <circle cx="80" cy="66" r="0.8" fill="#ff6" opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="step-body">
+      <span class="step-number">1</span>
+      <span class="step-title">Smash &amp; Sear the Burger Steaks</span>
+      <span class="step-time">8&ndash;10 min</span>
+      <div class="step-text">
+        <ul>
+          <li>Divide the 400g steak hach&eacute; into two portions: <strong>225g</strong> and <strong>175g</strong>.</li>
+          <li>Shape each portion into a ball, then place on a <strong>very hot</strong> pan or skillet with a bit of <strong>olive oil</strong> (or neutral oil).</li>
+          <li>Immediately <strong>smash the ball flat</strong> using a spatula, heavy plate, or burger press &mdash; make them <strong>thin</strong>. This is the smashed burger technique!</li>
+          <li>Season the top with <strong>salt and pepper</strong> while the bottom sears.</li>
+          <li>Cook on <strong>high heat</strong> for about <strong>2&ndash;3 minutes per side</strong> until you get a <strong>deep caramelized, crispy crust</strong>.</li>
+          <li>At the very end (last 30 seconds), sprinkle <strong>piment de Cayenne</strong> if desired.</li>
+          <li>Remove from pan and <strong>set aside</strong>.</li>
+        </ul>
+      </div>
+      <div class="step-tip">
+        <strong>&#x1F4A1; Tip:</strong> The key to a great smashed burger is <strong>maximum heat</strong> and <strong>not moving the patty</strong> while it sears.
+        Don&rsquo;t press it once it&rsquo;s flat &mdash; let the Maillard reaction do its thing! The high heat + thin patty = incredible caramelization and crispiness.
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step">
+    <div class="step-img" style="background: linear-gradient(135deg, #3d2b1f 0%, #6b4226 40%, #daa520 100%);">
+      <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+        <!-- Pan -->
+        <ellipse cx="100" cy="100" rx="72" ry="16" fill="#444"/>
+        <rect x="28" y="84" width="144" height="16" rx="2" fill="#555"/>
+        <ellipse cx="100" cy="84" rx="72" ry="16" fill="#666"/>
+        <ellipse cx="100" cy="84" rx="65" ry="12" fill="#333"/>
+        <!-- Handle -->
+        <rect x="166" y="79" width="26" height="10" rx="4" fill="#777"/>
+        <!-- Onion rings -->
+        <ellipse cx="75" cy="80" rx="9" ry="4" fill="none" stroke="#daa520" stroke-width="2.5" opacity="0.9"/>
+        <ellipse cx="90" cy="78" rx="7" ry="3.5" fill="none" stroke="#c9960a" stroke-width="2" opacity="0.8"/>
+        <ellipse cx="105" cy="81" rx="10" ry="4" fill="none" stroke="#daa520" stroke-width="2.5" opacity="0.85"/>
+        <path d="M 68 82 Q 72 78 80 80" stroke="#b8860b" stroke-width="2" fill="none" opacity="0.7"/>
+        <!-- Mushroom slices -->
+        <path d="M 118 76 Q 124 68 130 76" fill="#a0522d" opacity="0.9"/>
+        <rect x="122" y="76" width="4" height="5" fill="#8B6914" opacity="0.8"/>
+        <path d="M 108 78 Q 113 71 118 78" fill="#8B6914" opacity="0.8"/>
+        <rect x="111" y="78" width="3.5" height="4" fill="#7a5a14" opacity="0.7"/>
+        <!-- Steam -->
+        <path d="M 80 68 Q 77 56 83 46" stroke="#fff" stroke-width="1.2" fill="none" opacity="0.4" stroke-linecap="round"/>
+        <path d="M 110 68 Q 107 54 113 42" stroke="#fff" stroke-width="1.2" fill="none" opacity="0.5" stroke-linecap="round"/>
+        <path d="M 95 66 Q 92 52 98 40" stroke="#fff" stroke-width="1.2" fill="none" opacity="0.35" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="step-body">
+      <span class="step-number">2</span>
+      <span class="step-title">Caramelize the Onions &amp; Mushrooms</span>
+      <span class="step-time">10&ndash;15 min</span>
+      <div class="step-text">
+        <ul>
+          <li>In the same pan (or a fresh one), add a drizzle of <strong>olive oil</strong> over medium heat.</li>
+          <li>Add <strong>sliced onions</strong> and cook, stirring occasionally, until <strong>golden and caramelized</strong> (~10 min). Season with <strong>salt, pepper</strong>, and optionally <strong>herbes de Provence</strong>.</li>
+          <li>In a separate area of the pan (or a second pan), saut&eacute; <strong>sliced mushrooms</strong> until golden brown and all moisture has evaporated. Season the same way.</li>
+          <li>Set both aside.</li>
+        </ul>
+      </div>
+      <div class="step-tip">
+        <strong>&#x1F4A1; Tip:</strong> Don&rsquo;t rush the caramelization! Low-and-slow gives the sweetest, most flavourful onions. 
+        You can start the onions while the steaks are resting after cooking.
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step">
+    <div class="step-img" style="background: linear-gradient(135deg, #1a1a2e 0%, #c0392b 70%, #e74c3c 100%);">
+      <svg viewBox="0 0 180 140" xmlns="http://www.w3.org/2000/svg">
+        <!-- Oven body -->
+        <rect x="30" y="25" width="120" height="100" rx="8" fill="#555"/>
+        <rect x="35" y="30" width="110" height="90" rx="5" fill="#444"/>
+        <!-- Oven door (glass window) -->
+        <rect x="45" y="50" width="90" height="55" rx="4" fill="#2a2a2a"/>
+        <rect x="50" y="55" width="80" height="44" rx="3" fill="#1a1010"/>
+        <!-- Internal glow -->
+        <rect x="50" y="55" width="80" height="44" rx="3" fill="#ff4500" opacity="0.15"/>
+        <!-- Heating element glow -->
+        <line x1="58" y1="62" x2="122" y2="62" stroke="#ff4500" stroke-width="2" opacity="0.6"/>
+        <line x1="58" y1="90" x2="122" y2="90" stroke="#ff4500" stroke-width="2" opacity="0.4"/>
+        <!-- Oven handle -->
+        <rect x="62" y="102" width="56" height="5" rx="2.5" fill="#888"/>
+        <!-- Control panel -->
+        <rect x="45" y="32" width="90" height="14" rx="3" fill="#333"/>
+        <!-- Temperature display -->
+        <rect x="68" y="34" width="44" height="10" rx="2" fill="#111"/>
+        <text x="90" y="42" text-anchor="middle" fill="#ff4500" font-size="8" font-weight="800" font-family="monospace">220°C</text>
+        <!-- Knobs -->
+        <circle cx="54" cy="39" r="4" fill="#777"/>
+        <circle cx="54" cy="39" r="2" fill="#999"/>
+        <circle cx="126" cy="39" r="4" fill="#777"/>
+        <circle cx="126" cy="39" r="2" fill="#999"/>
+        <!-- Heat radiation lines -->
+        <path d="M 60 16 Q 62 10 64 16" stroke="#ff6" stroke-width="1" fill="none" opacity="0.5"/>
+        <path d="M 88 14 Q 90 6 92 14" stroke="#ff6" stroke-width="1" fill="none" opacity="0.6"/>
+        <path d="M 116 16 Q 118 10 120 16" stroke="#ff6" stroke-width="1" fill="none" opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="step-body">
+      <span class="step-number">3</span>
+      <span class="step-title">Preheat the Oven</span>
+      <span class="step-time">1 min</span>
+      <div class="step-text">
+        <ul>
+          <li><strong>Preheat your oven</strong> to <strong>200&ndash;220&deg;C</strong> (fan-assisted recommended).</li>
+          <li>Line a baking tray with <strong>parchment paper</strong>.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4 — ASSEMBLY + DIAGRAM -->
+  <div class="step">
+    <div class="step-body">
+      <span class="step-number">4</span>
+      <span class="step-title">Assemble the Burger in Pizza Dough</span>
+      <span class="step-time">5&ndash;8 min</span>
+      <div class="step-text">
+        <p>This is the fun part! Repeat for each burger:</p>
+        <ul>
+          <li>Take your pizza dough and divide it in two (proportional to each burger size).</li>
+          <li><strong>Roll/stretch each piece into a thin, round layer</strong> on a lightly floured surface &mdash; large enough to completely wrap around the filling.</li>
+          <li><strong>Layer 1 &mdash; Sauce:</strong> In the center of the dough circle, spread your sauces (mayo, mustard, ketchup &mdash; don&rsquo;t overdo it).</li>
+          <li><strong>Layer 2 &mdash; Steak:</strong> Place the smashed burger steak on top of the sauce.</li>
+          <li><strong>Layer 3 &mdash; Toppings:</strong> Add caramelized onions, mushrooms, pickles, dried tomatoes &mdash; whatever you like. <strong>Don&rsquo;t go too crazy with the quantity</strong> &mdash; just enough to complement, not overflow.</li>
+          <li><strong>Fold &amp; Seal:</strong> Carefully lift the edges of the dough up and over the filling, folding them toward the center on top. <strong>Pinch the dough together</strong> firmly to seal. Smooth out the top with your hands to form a neat dome/bun shape.</li>
+          <li>Place directly on the lined baking tray <strong>(seam-side up)</strong> &mdash; no need to flip! The egg wash and sesame seeds will go right on top of the sealed seam.</li>
+        </ul>
+      </div>
+      <div class="step-tip">
+        <strong>&#x26A0;&#xFE0F; Important:</strong> Keep the fillings in the <strong>center</strong> of the dough and leave enough border (at least 5&ndash;6 cm) around the edges to fold over. If the dough tears while folding, just pinch it back together &mdash; it will seal in the oven.
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== VISUAL DIAGRAM ===== -->
+  <div class="diagram-container">
+    <h3>&#x1F3A8; Assembly Diagram &mdash; How to Fold &amp; Seal</h3>
+    <div class="diagram-subtitle">Follow steps A &rarr; E to wrap your burger in pizza dough</div>
+
+    <div class="diagram-grid">
+
+      <!-- A: Roll out dough -->
+      <div class="diagram-cell">
+        <svg viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg">
+          <!-- Step label -->
+          <circle cx="110" cy="18" r="14" fill="#c0392b"/>
+          <text x="110" y="23" text-anchor="middle" fill="#fff" font-size="14" font-weight="800">A</text>
+          <!-- Rolling pin -->
+          <rect x="55" y="48" width="110" height="10" rx="5" fill="#b5651d" opacity="0.5"/>
+          <circle cx="55" cy="53" r="7" fill="#8B4513" opacity="0.5"/>
+          <circle cx="165" cy="53" r="7" fill="#8B4513" opacity="0.5"/>
+          <!-- Dough circle -->
+          <ellipse cx="110" cy="120" rx="80" ry="65" fill="#f5deb3" stroke="#d4a574" stroke-width="2.5" stroke-dasharray="8 4"/>
+          <!-- Center cross-hairs to show center -->
+          <line x1="110" y1="95" x2="110" y2="145" stroke="#d4a574" stroke-width="1" stroke-dasharray="4 3" opacity="0.5"/>
+          <line x1="70" y1="120" x2="150" y2="120" stroke="#d4a574" stroke-width="1" stroke-dasharray="4 3" opacity="0.5"/>
+          <!-- Border annotation -->
+          <path d="M 38 120 L 30 120" stroke="#c0392b" stroke-width="1.5" marker-end="url(#arrowA)"/>
+          <path d="M 182 120 L 190 120" stroke="#c0392b" stroke-width="1.5"/>
+          <text x="110" y="190" text-anchor="middle" fill="#999" font-size="9">~5-6 cm border</text>
+          <!-- Arrows pointing inward to show border -->
+          <path d="M 38 155 Q 30 155 30 148 L 30 128" stroke="#c0392b" stroke-width="1" fill="none" stroke-dasharray="3 2"/>
+          <path d="M 182 155 Q 190 155 190 148 L 190 128" stroke="#c0392b" stroke-width="1" fill="none" stroke-dasharray="3 2"/>
+        </svg>
+        <div class="diagram-label"><strong>A.</strong> Roll dough into a thin circle. Leave a wide border around the edges for folding.</div>
+      </div>
+
+      <!-- B: Add sauce in center -->
+      <div class="diagram-cell">
+        <svg viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="110" cy="18" r="14" fill="#c0392b"/>
+          <text x="110" y="23" text-anchor="middle" fill="#fff" font-size="14" font-weight="800">B</text>
+          <!-- Dough -->
+          <ellipse cx="110" cy="115" rx="80" ry="65" fill="#f5deb3" stroke="#d4a574" stroke-width="2.5"/>
+          <!-- Sauce spread -->
+          <ellipse cx="110" cy="115" rx="32" ry="22" fill="#c0392b" opacity="0.7"/>
+          <ellipse cx="105" cy="110" rx="12" ry="8" fill="#e74c3c" opacity="0.5"/>
+          <!-- Sauce drops -->
+          <circle cx="95" cy="120" r="4" fill="#e74c3c" opacity="0.6"/>
+          <circle cx="125" cy="108" r="3" fill="#e74c3c" opacity="0.5"/>
+          <!-- Label -->
+          <text x="110" y="146" text-anchor="middle" fill="#fff" font-size="8" font-weight="700">SAUCE</text>
+          <!-- Squeeze bottle icon -->
+          <rect x="168" y="55" width="12" height="30" rx="3" fill="#c0392b" opacity="0.4"/>
+          <rect x="171" y="48" width="6" height="10" rx="2" fill="#c0392b" opacity="0.4"/>
+          <!-- Squirt line -->
+          <path d="M 168 70 Q 150 85 140 100" stroke="#c0392b" stroke-width="1.5" fill="none" stroke-dasharray="3 2" opacity="0.5"/>
+          <text x="110" y="190" text-anchor="middle" fill="#999" font-size="9">mayo + mustard + ketchup</text>
+        </svg>
+        <div class="diagram-label"><strong>B.</strong> Spread sauce mix in the center of the dough. Don&rsquo;t overdo it!</div>
+      </div>
+
+      <!-- C: Stack the filling -->
+      <div class="diagram-cell">
+        <svg viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="110" cy="18" r="14" fill="#c0392b"/>
+          <text x="110" y="23" text-anchor="middle" fill="#fff" font-size="14" font-weight="800">C</text>
+          <!-- Dough -->
+          <ellipse cx="110" cy="130" rx="80" ry="55" fill="#f5deb3" stroke="#d4a574" stroke-width="2.5"/>
+          <!-- Sauce layer -->
+          <ellipse cx="110" cy="130" rx="35" ry="8" fill="#c0392b" opacity="0.5"/>
+          <!-- Steak (cross-section view) -->
+          <rect x="72" y="108" width="76" height="16" rx="4" fill="#6b3a2a"/>
+          <rect x="75" y="110" width="18" height="4" rx="2" fill="#8B4513" opacity="0.6"/>
+          <rect x="100" y="111" width="12" height="3" rx="1.5" fill="#8B4513" opacity="0.5"/>
+          <text x="110" y="120" text-anchor="middle" fill="#d4a060" font-size="7" font-weight="700">STEAK</text>
+          <!-- Toppings on top -->
+          <!-- Mushroom slices -->
+          <ellipse cx="88" cy="100" rx="10" ry="5" fill="#a0522d" opacity="0.8"/>
+          <rect x="85" y="95" width="6" height="6" rx="3" fill="#8B6914" opacity="0.7"/>
+          <!-- Onion rings -->
+          <ellipse cx="110" cy="97" rx="8" ry="4" fill="none" stroke="#daa520" stroke-width="2" opacity="0.8"/>
+          <ellipse cx="118" cy="100" rx="6" ry="3" fill="none" stroke="#daa520" stroke-width="1.5" opacity="0.6"/>
+          <!-- Pickle slices -->
+          <circle cx="130" cy="98" r="5" fill="#7f8c3b" opacity="0.8"/>
+          <circle cx="130" cy="98" r="2.5" fill="#9aad4f" opacity="0.6"/>
+          <!-- Layer labels -->
+          <line x1="155" y1="99" x2="175" y2="85" stroke="#888" stroke-width="0.8"/>
+          <text x="177" y="84" fill="#888" font-size="7">toppings</text>
+          <line x1="155" y1="116" x2="175" y2="116" stroke="#888" stroke-width="0.8"/>
+          <text x="177" y="119" fill="#888" font-size="7">steak</text>
+          <line x1="148" y1="130" x2="175" y2="138" stroke="#888" stroke-width="0.8"/>
+          <text x="177" y="141" fill="#888" font-size="7">sauce</text>
+          <text x="110" y="190" text-anchor="middle" fill="#999" font-size="9">don&apos;t overfill!</text>
+        </svg>
+        <div class="diagram-label"><strong>C.</strong> Layer steak on sauce, add toppings. Keep it centered &mdash; don&rsquo;t overfill.</div>
+      </div>
+
+      <!-- D: Fold edges up -->
+      <div class="diagram-cell">
+        <svg viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="110" cy="18" r="14" fill="#c0392b"/>
+          <text x="110" y="23" text-anchor="middle" fill="#fff" font-size="14" font-weight="800">D</text>
+          <!-- Shadow -->
+          <ellipse cx="110" cy="170" rx="60" ry="8" fill="#e8e2da"/>
+          <!-- Dough bottom half (bowl shape) -->
+          <path d="M 40 110 Q 40 170 110 170 Q 180 170 180 110" fill="#f5deb3" stroke="#d4a574" stroke-width="2.5"/>
+          <!-- Filling visible inside -->
+          <rect x="70" y="125" width="80" height="12" rx="4" fill="#6b3a2a" opacity="0.7"/>
+          <ellipse cx="110" cy="140" rx="30" ry="5" fill="#c0392b" opacity="0.3"/>
+          <!-- Left dough flap being pulled up -->
+          <path d="M 40 110 Q 35 80 65 55" fill="#f5deb3" stroke="#d4a574" stroke-width="2.5" fill-opacity="0.85"/>
+          <!-- Right dough flap being pulled up -->
+          <path d="M 180 110 Q 185 80 155 55" fill="#f5deb3" stroke="#d4a574" stroke-width="2.5" fill-opacity="0.85"/>
+          <!-- Curved arrows showing fold direction -->
+          <defs>
+            <marker id="arrRed" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <path d="M 0 0 L 6 3 L 0 6 Z" fill="#c0392b"/>
+            </marker>
+          </defs>
+          <path d="M 48 65 Q 65 42 90 48" stroke="#c0392b" stroke-width="2" fill="none" marker-end="url(#arrRed)"/>
+          <path d="M 172 65 Q 155 42 130 48" stroke="#c0392b" stroke-width="2" fill="none" marker-end="url(#arrRed)"/>
+          <text x="110" y="190" text-anchor="middle" fill="#999" font-size="9">pull edges upward</text>
+        </svg>
+        <div class="diagram-label"><strong>D.</strong> Lift the dough edges up and over the filling, pulling toward the center.</div>
+      </div>
+
+      <!-- E: Pinch, seal, egg wash & seeds -->
+      <div class="diagram-cell">
+        <svg viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="110" cy="18" r="14" fill="#c0392b"/>
+          <text x="110" y="23" text-anchor="middle" fill="#fff" font-size="14" font-weight="800">E</text>
+          <!-- Baking tray -->
+          <rect x="25" y="162" width="170" height="7" rx="3" fill="#bbb" opacity="0.4"/>
+          <rect x="30" y="155" width="160" height="9" rx="2" fill="#ddd" opacity="0.3"/>
+          <!-- Parchment paper -->
+          <path d="M 35 163 Q 35 156 45 156 L 175 156 Q 185 156 185 163" fill="#f5f0e0" stroke="#e0d5c0" stroke-width="1"/>
+          <!-- Dome shape on tray (seam-side UP) -->
+          <defs>
+            <linearGradient id="eggWash" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#daa520"/>
+              <stop offset="50%" stop-color="#e8c44a"/>
+              <stop offset="100%" stop-color="#f5deb3"/>
+            </linearGradient>
+          </defs>
+          <path d="M 55 158 Q 55 72 110 65 Q 165 72 165 158 Z" fill="url(#eggWash)" stroke="#c9960a" stroke-width="2"/>
+          <!-- Shine/gloss -->
+          <ellipse cx="95" cy="100" rx="16" ry="22" fill="#fff" opacity="0.13"/>
+          <!-- Seam line on top (visible — this is seam-side up) -->
+          <path d="M 82 68 Q 110 60 138 68" stroke="#b5651d" stroke-width="2" fill="none" stroke-dasharray="5 3"/>
+          <!-- Pinch marks along seam -->
+          <circle cx="86" cy="68" r="3" fill="#d4a574" stroke="#b5651d" stroke-width="0.8"/>
+          <circle cx="98" cy="64" r="3" fill="#d4a574" stroke="#b5651d" stroke-width="0.8"/>
+          <circle cx="110" cy="62" r="3" fill="#d4a574" stroke="#b5651d" stroke-width="0.8"/>
+          <circle cx="122" cy="64" r="3" fill="#d4a574" stroke="#b5651d" stroke-width="0.8"/>
+          <circle cx="134" cy="68" r="3" fill="#d4a574" stroke="#b5651d" stroke-width="0.8"/>
+          <!-- Sesame seeds scattered on dome -->
+          <ellipse cx="90" cy="85" rx="3" ry="5" fill="#c9a96e" transform="rotate(-20 90 85)"/>
+          <ellipse cx="108" cy="78" rx="3" ry="5" fill="#c9a96e" transform="rotate(15 108 78)"/>
+          <ellipse cx="125" cy="82" rx="3" ry="5" fill="#c9a96e" transform="rotate(-10 125 82)"/>
+          <ellipse cx="100" cy="98" rx="3" ry="5" fill="#c9a96e" transform="rotate(25 100 98)"/>
+          <ellipse cx="118" cy="95" rx="3" ry="5" fill="#c9a96e" transform="rotate(-15 118 95)"/>
+          <ellipse cx="85" cy="110" rx="3" ry="5" fill="#c9a96e" transform="rotate(10 85 110)"/>
+          <ellipse cx="135" cy="105" rx="3" ry="5" fill="#c9a96e" transform="rotate(-25 135 105)"/>
+          <ellipse cx="110" cy="110" rx="3" ry="5" fill="#c9a96e" transform="rotate(5 110 110)"/>
+          <!-- Brush icon on side -->
+          <rect x="175" y="60" width="6" height="22" rx="2" fill="#b5651d" opacity="0.5"/>
+          <rect x="172" y="81" width="12" height="7" rx="1" fill="#daa520" opacity="0.4"/>
+          <line x1="173" y1="88" x2="173" y2="90" stroke="#daa520" stroke-width="0.8" opacity="0.5"/>
+          <line x1="177" y1="88" x2="177" y2="91" stroke="#daa520" stroke-width="0.8" opacity="0.5"/>
+          <line x1="181" y1="88" x2="181" y2="90" stroke="#daa520" stroke-width="0.8" opacity="0.5"/>
+          <!-- Annotation: pinch -->
+          <defs>
+            <marker id="arrGray" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
+              <path d="M 0 0 L 5 2.5 L 0 5 Z" fill="#888"/>
+            </marker>
+          </defs>
+          <line x1="140" y1="66" x2="170" y2="50" stroke="#c0392b" stroke-width="0.8"/>
+          <text x="172" y="49" fill="#c0392b" font-size="7" font-weight="600">pinch!</text>
+          <!-- Annotation: seam up -->
+          <path d="M 110 58 L 110 42" stroke="#888" stroke-width="1" fill="none" marker-end="url(#arrGray)"/>
+          <text x="110" y="38" text-anchor="middle" fill="#888" font-size="7">seam on top</text>
+          <text x="110" y="190" text-anchor="middle" fill="#999" font-size="9">seal &bull; egg wash &bull; sesame &bull; bake!</text>
+        </svg>
+        <div class="diagram-label"><strong>E.</strong> Pinch &amp; seal on top. Brush with egg yolk, add sesame seeds. Straight to oven!</div>
+      </div>
+
+      <!-- Legend -->
+      <div class="diagram-legend">
+        <span><span class="legend-swatch" style="background:#f5deb3; border:1px solid #d4a574;"></span> Pizza dough</span>
+        <span><span class="legend-swatch" style="background:#c0392b;"></span> Sauce</span>
+        <span><span class="legend-swatch" style="background:#6b3a2a;"></span> Steak</span>
+        <span><span class="legend-swatch" style="background:#7f8c3b;"></span> Pickles</span>
+        <span><span class="legend-swatch" style="background:#daa520;"></span> Onions / Egg wash</span>
+        <span><span class="legend-swatch" style="background:#a0522d;"></span> Mushrooms</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="step">
+    <div class="step-img" style="background: linear-gradient(135deg, #5a3e1b 0%, #c9960a 50%, #f5d76e 100%);">
+      <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+        <!-- Dome/bun shape -->
+        <defs>
+          <linearGradient id="bun5" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#daa520"/>
+            <stop offset="60%" stop-color="#e8c44a"/>
+            <stop offset="100%" stop-color="#f5deb3"/>
+          </linearGradient>
+        </defs>
+        <path d="M 50 110 Q 50 40 100 30 Q 150 40 150 110 Z" fill="url(#bun5)" stroke="#c9960a" stroke-width="2"/>
+        <!-- Shine -->
+        <ellipse cx="88" cy="65" rx="14" ry="20" fill="#fff" opacity="0.15"/>
+        <!-- Seam line on top -->
+        <path d="M 78 34 Q 100 28 122 34" stroke="#b5651d" stroke-width="1.5" fill="none" stroke-dasharray="4 3"/>
+        <!-- Sesame seeds -->
+        <ellipse cx="80" cy="50" rx="3" ry="5" fill="#c9a96e" transform="rotate(-20 80 50)"/>
+        <ellipse cx="100" cy="42" rx="3" ry="5" fill="#c9a96e" transform="rotate(15 100 42)"/>
+        <ellipse cx="118" cy="48" rx="3" ry="5" fill="#c9a96e" transform="rotate(-10 118 48)"/>
+        <ellipse cx="90" cy="65" rx="3" ry="5" fill="#c9a96e" transform="rotate(25 90 65)"/>
+        <ellipse cx="112" cy="60" rx="3" ry="5" fill="#c9a96e" transform="rotate(-15 112 60)"/>
+        <ellipse cx="76" cy="78" rx="3" ry="5" fill="#c9a96e" transform="rotate(10 76 78)"/>
+        <ellipse cx="128" cy="72" rx="3" ry="5" fill="#c9a96e" transform="rotate(-25 128 72)"/>
+        <ellipse cx="104" cy="76" rx="3" ry="5" fill="#c9a96e" transform="rotate(5 104 76)"/>
+        <!-- Brush -->
+        <rect x="155" y="28" width="6" height="36" rx="2" fill="#b5651d" opacity="0.7"/>
+        <rect x="152" y="62" width="12" height="8" rx="1.5" fill="#daa520" opacity="0.6"/>
+        <!-- Brush strokes -->
+        <line x1="153" y1="70" x2="153" y2="72" stroke="#daa520" stroke-width="0.8" opacity="0.5"/>
+        <line x1="157" y1="70" x2="157" y2="73" stroke="#daa520" stroke-width="0.8" opacity="0.5"/>
+        <line x1="161" y1="70" x2="161" y2="72" stroke="#daa520" stroke-width="0.8" opacity="0.5"/>
+        <!-- Drip from brush -->
+        <path d="M 152 72 Q 140 80 130 75" stroke="#e8c44a" stroke-width="1" fill="none" opacity="0.5" stroke-dasharray="3 2"/>
+        <!-- Baking tray -->
+        <rect x="35" y="110" width="130" height="5" rx="2" fill="#bbb" opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="step-body">
+      <span class="step-number">5</span>
+      <span class="step-title">Egg Wash &amp; Sesame Seeds</span>
+      <span class="step-time">2 min</span>
+      <div class="step-text">
+        <ul>
+          <li>Beat an <strong>egg yolk</strong> with a tiny splash of water.</li>
+          <li>Using a brush (or your fingers), <strong>gently paint the sealed top</strong> of each wrapped burger with the egg yolk mixture. This gives a beautiful <strong>golden, glossy finish</strong> when baked and helps hide the seam.</li>
+          <li>Sprinkle <strong>sesame seeds</strong> on top &mdash; they&rsquo;ll toast in the oven and give a classic burger bun look!</li>
+        </ul>
+      </div>
+      <div class="step-tip">
+        <strong>&#x1F4A1; Tip:</strong> The egg wash is purely cosmetic (and delicious). If you skip it, the dough will still bake fine &mdash; just a bit more matte in appearance.
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 6 -->
+  <div class="step">
+    <div class="step-img" style="background: linear-gradient(135deg, #1a1a2e 0%, #8B4513 50%, #daa520 100%);">
+      <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+        <!-- Oven body -->
+        <rect x="25" y="20" width="150" height="110" rx="8" fill="#555"/>
+        <rect x="30" y="25" width="140" height="100" rx="5" fill="#444"/>
+        <!-- Oven window -->
+        <rect x="40" y="48" width="120" height="62" rx="4" fill="#2a2a2a"/>
+        <rect x="45" y="53" width="110" height="52" rx="3" fill="#1a0a00"/>
+        <!-- Orange glow inside -->
+        <rect x="45" y="53" width="110" height="52" rx="3" fill="#ff6600" opacity="0.12"/>
+        <!-- Top heating element -->
+        <line x1="53" y1="58" x2="147" y2="58" stroke="#ff4500" stroke-width="2" opacity="0.5"/>
+        <!-- Two golden domes inside oven -->
+        <defs>
+          <linearGradient id="baked" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#daa520"/>
+            <stop offset="100%" stop-color="#b8860b"/>
+          </linearGradient>
+        </defs>
+        <path d="M 65 95 Q 65 72 82 68 Q 99 72 99 95 Z" fill="url(#baked)" opacity="0.85"/>
+        <path d="M 105 95 Q 105 75 118 72 Q 131 75 131 95 Z" fill="url(#baked)" opacity="0.85"/>
+        <!-- Sesame seeds on buns -->
+        <ellipse cx="78" cy="78" rx="2" ry="3" fill="#c9a96e" opacity="0.7" transform="rotate(-15 78 78)"/>
+        <ellipse cx="88" cy="75" rx="2" ry="3" fill="#c9a96e" opacity="0.7" transform="rotate(10 88 75)"/>
+        <ellipse cx="115" cy="80" rx="2" ry="3" fill="#c9a96e" opacity="0.7" transform="rotate(-10 115 80)"/>
+        <ellipse cx="124" cy="78" rx="2" ry="3" fill="#c9a96e" opacity="0.7" transform="rotate(15 124 78)"/>
+        <!-- Baking tray line -->
+        <line x1="55" y1="96" x2="145" y2="96" stroke="#888" stroke-width="1.5" opacity="0.6"/>
+        <!-- Oven handle -->
+        <rect x="70" y="112" width="60" height="5" rx="2.5" fill="#888"/>
+        <!-- Control panel -->
+        <rect x="40" y="28" width="120" height="16" rx="3" fill="#333"/>
+        <circle cx="52" cy="36" r="4" fill="#777"/>
+        <circle cx="148" cy="36" r="4" fill="#777"/>
+        <rect x="70" y="30" width="60" height="12" rx="2" fill="#111"/>
+        <text x="100" y="39" text-anchor="middle" fill="#ff4500" font-size="8" font-weight="800" font-family="monospace">15-20m</text>
+      </svg>
+    </div>
+    <div class="step-body">
+      <span class="step-number">6</span>
+      <span class="step-title">Bake!</span>
+      <span class="step-time">15&ndash;20 min</span>
+      <div class="step-text">
+        <ul>
+          <li>Place the tray in the <strong>preheated oven at 200&ndash;220&deg;C</strong>.</li>
+          <li>Bake for <strong>15&ndash;20 minutes</strong>, or until the dough is <strong>golden brown</strong> all over.</li>
+          <li>Let them rest for <strong>2&ndash;3 minutes</strong> before cutting or serving.</li>
+        </ul>
+      </div>
+      <div class="step-tip">
+        <strong>&#x1F4A1; Tip:</strong> Every oven is different &mdash; keep an eye on them after 12 minutes. The dough should be golden, firm to the touch, and sound hollow when you tap the top.
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 7 -->
+  <div class="step">
+    <div class="step-img" style="background: linear-gradient(135deg, #2c1810 0%, #8B4513 30%, #c0392b 70%, #e74c3c 100%);">
+      <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+        <!-- Plate -->
+        <ellipse cx="100" cy="105" rx="70" ry="18" fill="#e8e2da"/>
+        <ellipse cx="100" cy="102" rx="70" ry="18" fill="#f5f0e8"/>
+        <ellipse cx="100" cy="102" rx="58" ry="13" fill="#fff" opacity="0.5"/>
+        <!-- Cut burger showing cross-section -->
+        <!-- Left half -->
+        <path d="M 60 100 L 60 60 Q 60 42 82 38 L 95 38 L 95 100 Z" fill="#f5deb3" stroke="#d4a574" stroke-width="1.5"/>
+        <!-- Filling layers visible in cross-section -->
+        <rect x="63" y="82" width="30" height="5" rx="1" fill="#c0392b" opacity="0.6"/> <!-- sauce -->
+        <rect x="63" y="72" width="30" height="10" rx="2" fill="#6b3020"/> <!-- steak -->
+        <rect x="63" y="68" width="30" height="5" rx="1" fill="#daa520" opacity="0.7"/> <!-- onions -->
+        <circle cx="70" cy="66" r="3" fill="#7f8c3b" opacity="0.8"/> <!-- pickle -->
+        <!-- Right half (slightly offset) -->
+        <path d="M 105 100 L 105 60 Q 105 42 118 38 L 140 42 Q 146 48 146 100 Z" fill="#f5deb3" stroke="#d4a574" stroke-width="1.5"/>
+        <rect x="108" y="82" width="35" height="5" rx="1" fill="#c0392b" opacity="0.6"/>
+        <rect x="108" y="72" width="35" height="10" rx="2" fill="#6b3020"/>
+        <rect x="108" y="68" width="35" height="5" rx="1" fill="#daa520" opacity="0.7"/>
+        <circle cx="130" cy="66" r="3" fill="#7f8c3b" opacity="0.8"/>
+        <!-- Golden top crust -->
+        <path d="M 60 60 Q 60 42 82 38 L 95 38" stroke="#c9960a" stroke-width="2" fill="none"/>
+        <path d="M 105 60 Q 105 42 118 38 L 140 42 Q 146 48 146 60" stroke="#c9960a" stroke-width="2" fill="none"/>
+        <!-- Sesame seeds on top -->
+        <ellipse cx="72" cy="48" rx="2" ry="3.5" fill="#c9a96e" transform="rotate(-15 72 48)"/>
+        <ellipse cx="85" cy="42" rx="2" ry="3.5" fill="#c9a96e" transform="rotate(10 85 42)"/>
+        <ellipse cx="120" cy="44" rx="2" ry="3.5" fill="#c9a96e" transform="rotate(-10 120 44)"/>
+        <ellipse cx="135" cy="48" rx="2" ry="3.5" fill="#c9a96e" transform="rotate(15 135 48)"/>
+        <!-- Steam -->
+        <path d="M 80 30 Q 77 20 83 12" stroke="#fff" stroke-width="1" fill="none" opacity="0.5" stroke-linecap="round"/>
+        <path d="M 120 28 Q 117 18 123 10" stroke="#fff" stroke-width="1" fill="none" opacity="0.4" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="step-body">
+      <span class="step-number">7</span>
+      <span class="step-title">Serve &amp; Enjoy!</span>
+      <span class="step-time">&#x1F389;</span>
+      <div class="step-text">
+        <ul>
+          <li>Cut in half to reveal the beautiful layers inside, or serve whole.</li>
+          <li>Pair with a <strong>side salad</strong>, <strong>fries</strong>, or enjoy on its own!</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PRO TIPS ===== -->
+  <h2>&#x1F4AA; Pro Tips</h2>
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-icon">&#x1F525;</div>
+      <div class="tip-title">Smash Technique</div>
+      <div class="tip-desc">Use a spatula or heavy flat surface. Smash once, hard, within the first 30 seconds of placing on the pan. Then leave it alone! The thinner the patty, the crispier the crust.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">&#x1F9C5;</div>
+      <div class="tip-title">Don&rsquo;t Overfill</div>
+      <div class="tip-desc">It&rsquo;s tempting to load up the fillings, but restraint is key. Too much filling makes folding difficult and can cause the dough to break or leak in the oven.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">&#x1F3AF;</div>
+      <div class="tip-title">Seal It Well</div>
+      <div class="tip-desc">Pinch the dough edges together firmly at the top. The seam stays on top &mdash; no need to flip! The egg wash and sesame seeds will cover and seal the seam beautifully in the oven.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">&#x1F32E;</div>
+      <div class="tip-title">Thin Dough = Better Result</div>
+      <div class="tip-desc">Roll the dough as thin as you comfortably can. Thick dough will result in a bready texture that overwhelms the filling. Thin dough bakes crisp and golden.</div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <div class="footer">
+    Made with &#x2764;&#xFE0F; &mdash; Smashed Burger in Pizza Dough Recipe
+  </div>
+
+</body>
+</html>

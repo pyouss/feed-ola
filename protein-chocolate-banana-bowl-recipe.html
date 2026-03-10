@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Protein Chocolate Banana Bowl — Clean Fuel</title>
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f5f0eb;
+      color: #333;
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 0 16px 60px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      margin: 16px 0 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    }
+    .hero-illustration {
+      width: 100%; height: 340px;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #4E342E, #6D4C41, #3E2723);
+    }
+    .hero-illustration svg { height: 80%; width: auto; filter: drop-shadow(0 4px 16px rgba(0,0,0,0.3)); }
+    .hero-overlay {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(62,39,35,0.92));
+      padding: 50px 20px 18px;
+    }
+    .hero-overlay h1 {
+      color: #fff; font-size: 1.5rem; font-weight: 800; line-height: 1.3;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .hero-overlay .subtitle {
+      color: rgba(255,255,255,0.88); font-size: 0.9rem; margin-top: 6px;
+    }
+
+    /* ===== META BADGES ===== */
+    .meta-row {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      justify-content: center; margin-bottom: 24px;
+    }
+    .badge {
+      background: #fff; border-radius: 12px; padding: 12px 16px;
+      text-align: center; flex: 1; min-width: 100px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border: 1px solid #e8e2da;
+    }
+    .badge .label {
+      font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.8px;
+      color: #999; font-weight: 600;
+    }
+    .badge .value { font-size: 1.15rem; font-weight: 800; color: #4E342E; }
+
+    /* ===== SECTIONS ===== */
+    h2 {
+      font-size: 1.3rem; font-weight: 800; color: #333;
+      margin: 32px 0 14px; padding-bottom: 8px;
+      border-bottom: 2px solid #e8e2da;
+    }
+    h3 { font-size: 1rem; font-weight: 700; color: #5D4037; }
+
+    /* ===== NUTRITION GRID ===== */
+    .nutrition-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 10px; margin-top: 12px;
+    }
+    .nutri-card {
+      background: #fff; border-radius: 12px; padding: 14px 10px;
+      text-align: center; border: 1px solid #e8e2da;
+    }
+    .nutri-card .nutri-val { font-size: 1.3rem; font-weight: 800; color: #4E342E; }
+    .nutri-card .nutri-label {
+      font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px;
+      color: #999; margin-top: 2px; font-weight: 600;
+    }
+    .nutri-note {
+      margin-top: 10px; font-size: 0.85rem; color: #777;
+      background: #fff; padding: 10px 14px;
+      border-radius: 10px; border: 1px solid #e8e2da;
+    }
+
+    /* ===== INFO BOX ===== */
+    .info-box {
+      background: linear-gradient(135deg, #efebe9, #fff8f0);
+      border: 2px solid #d7ccc8;
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin: 20px 0;
+    }
+    .info-box h3 { color: #5D4037; margin: 0 0 10px; font-size: 1rem; }
+    .info-box p { font-size: 0.92rem; color: #555; line-height: 1.7; }
+    .info-box ul { margin: 8px 0 0 18px; }
+    .info-box li { font-size: 0.9rem; color: #555; margin-bottom: 6px; line-height: 1.6; }
+
+    /* ===== INGREDIENT DETAIL CARDS ===== */
+    .ingredient-detail-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px; margin-top: 14px;
+    }
+    .ingredient-detail {
+      background: #fff; border-radius: 12px; padding: 16px;
+      border: 1px solid #e8e2da;
+    }
+    .ingredient-detail .ing-icon { font-size: 1.5rem; margin-bottom: 6px; }
+    .ingredient-detail .ing-name { font-weight: 700; font-size: 0.9rem; color: #4E342E; margin-bottom: 4px; }
+    .ingredient-detail .ing-desc { font-size: 0.82rem; color: #666; line-height: 1.55; }
+    .ingredient-detail .ing-macros {
+      margin-top: 8px; font-size: 0.75rem; color: #8D6E63;
+      font-weight: 600; background: #efebe9;
+      padding: 4px 8px; border-radius: 6px; display: inline-block;
+    }
+
+    /* ===== MICRO GRID ===== */
+    .micro-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 8px; margin-top: 12px;
+    }
+    .micro-card {
+      background: #fff; border-radius: 10px; padding: 12px 8px;
+      text-align: center; border: 1px solid #e8e2da;
+    }
+    .micro-card .micro-val { font-size: 1rem; font-weight: 800; color: #5D4037; }
+    .micro-card .micro-label { font-size: 0.65rem; text-transform: uppercase; color: #999; font-weight: 600; letter-spacing: 0.3px; }
+
+    /* ===== INGREDIENTS ===== */
+    .ingredients-section {
+      display: grid; grid-template-columns: 1fr;
+      gap: 12px; margin-top: 14px;
+    }
+    .ingredient-group {
+      background: #fff; border-radius: 12px; padding: 16px 20px;
+      border: 1px solid #e8e2da;
+    }
+    .ingredient-group h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+    .ingredient-group ul { list-style: none; }
+    .ingredient-group li {
+      font-size: 0.92rem; color: #444;
+      padding: 4px 0; border-bottom: 1px solid #f4f0ec;
+    }
+    .ingredient-group li:last-child { border-bottom: none; }
+    .ingredient-group li::before { content: "•"; color: #8D6E63; font-weight: 700; margin-right: 8px; }
+    .optional { color: #999; font-style: italic; }
+
+    /* ===== STEPS ===== */
+    .step {
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+      margin: 20px 0;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      border: 1px solid #e8e2da;
+    }
+    .step-img {
+      width: 100%; height: 200px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .step-img svg { height: 75%; width: auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15)); }
+    .step-body { padding: 18px 20px; }
+    .step-number {
+      display: inline-block;
+      background: #4E342E;
+      color: #fff;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 32px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+    .step-title {
+      font-size: 1.1rem; font-weight: 700; color: #333;
+      display: inline; vertical-align: middle;
+    }
+    .step-time {
+      display: inline-block;
+      background: #efebe9;
+      color: #5D4037;
+      font-size: 0.78rem; font-weight: 700;
+      padding: 3px 10px; border-radius: 20px;
+      margin-left: 10px; vertical-align: middle;
+    }
+    .step-text {
+      margin-top: 14px;
+      font-size: 0.95rem; color: #444; line-height: 1.75;
+    }
+    .step-text ul { margin: 8px 0 0 18px; }
+    .step-text li { margin-bottom: 4px; }
+    .step-tip {
+      margin-top: 14px;
+      background: #efebe9;
+      border-left: 4px solid #8D6E63;
+      padding: 10px 14px;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.88rem;
+      color: #666;
+    }
+    .step-tip strong { color: #5D4037; }
+
+    /* ===== TIPS ===== */
+    .tips-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px; margin-top: 12px;
+    }
+    .tip-card {
+      background: #fff; border-radius: 12px; padding: 16px;
+      border: 1px solid #e8e2da;
+    }
+    .tip-card .tip-icon { font-size: 1.5rem; margin-bottom: 6px; }
+    .tip-card .tip-title { font-weight: 700; font-size: 0.9rem; color: #333; margin-bottom: 4px; }
+    .tip-card .tip-desc { font-size: 0.85rem; color: #666; line-height: 1.5; }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      margin-top: 40px; text-align: center;
+      font-size: 0.8rem; color: #bbb;
+      border-top: 1px solid #e8e2da; padding-top: 16px;
+    }
+
+    /* ===== PRINT ===== */
+    @media print {
+      body { background: #fff; padding: 0; max-width: 100%; }
+      .hero { box-shadow: none; margin-top: 0; }
+      .step { break-inside: avoid; box-shadow: none; }
+      .step-img { height: 160px; }
+      .badge { box-shadow: none; }
+      .nutrition-grid { break-inside: avoid; }
+      .tips-grid { break-inside: avoid; }
+    }
+
+    /* ===== RESPONSIVE — TABLET ===== */
+    @media (max-width: 768px) {
+      body { padding: 0 12px 40px; }
+      .hero { margin: 12px 0 20px; border-radius: 12px; }
+      .hero-illustration { height: 260px; }
+      .hero-overlay { padding: 30px 16px 16px; }
+      .hero-overlay h1 { font-size: 1.35rem; }
+      .hero-overlay .subtitle { font-size: 0.85rem; }
+      h2 { font-size: 1.2rem; margin: 28px 0 12px; }
+      .meta-row { gap: 8px; }
+      .badge { padding: 10px 12px; min-width: 0; }
+      .badge .value { font-size: 1rem; }
+      .step-body { padding: 16px; }
+      .step-title { font-size: 1rem; }
+      .step-text { font-size: 0.9rem; }
+      .step-img { height: 170px; }
+    }
+
+    /* ===== RESPONSIVE — PHONE ===== */
+    @media (max-width: 480px) {
+      body { padding: 0 10px 32px; line-height: 1.6; }
+      .hero { margin: 8px -10px 16px; border-radius: 0; }
+      .hero-illustration { height: 220px; }
+      .hero-overlay { padding: 24px 14px 14px; }
+      .hero-overlay h1 { font-size: 1.15rem; line-height: 1.35; }
+      .hero-overlay .subtitle { font-size: 0.8rem; line-height: 1.4; }
+      .meta-row {
+        display: grid; grid-template-columns: 1fr 1fr;
+        gap: 8px; margin-bottom: 20px;
+      }
+      .badge { padding: 10px 8px; border-radius: 10px; min-width: 0; }
+      .badge .label { font-size: 0.65rem; letter-spacing: 0.5px; }
+      .badge .value { font-size: 1rem; }
+      h2 { font-size: 1.1rem; margin: 24px 0 10px; padding-bottom: 6px; }
+      h3 { font-size: 0.95rem; }
+      .nutrition-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .nutri-card { padding: 12px 8px; border-radius: 10px; }
+      .nutri-card .nutri-val { font-size: 1.15rem; }
+      .nutri-card .nutri-label { font-size: 0.65rem; }
+      .nutri-note { font-size: 0.8rem; padding: 8px 12px; }
+      .ingredient-detail-grid { grid-template-columns: 1fr; gap: 10px; }
+      .micro-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .info-box { padding: 14px; border-radius: 10px; }
+      .ingredients-section { grid-template-columns: 1fr; gap: 10px; }
+      .ingredient-group { padding: 14px; border-radius: 10px; }
+      .ingredient-group h3 { font-size: 0.82rem; margin-bottom: 8px; }
+      .ingredient-group li { font-size: 0.87rem; padding: 3px 0; }
+      .step { margin: 14px -10px; border-radius: 0; border-left: none; border-right: none; }
+      .step-img { height: 150px; }
+      .step-body { padding: 14px 14px 16px; }
+      .step-number { width: 28px; height: 28px; line-height: 28px; font-size: 0.82rem; margin-right: 8px; }
+      .step-title { font-size: 0.95rem; }
+      .step-time { font-size: 0.7rem; padding: 2px 8px; margin-left: 6px; }
+      .step-text { font-size: 0.88rem; margin-top: 10px; line-height: 1.65; }
+      .step-text ul { margin: 6px 0 0 12px; }
+      .step-text li { margin-bottom: 6px; }
+      .step-tip { font-size: 0.82rem; padding: 8px 12px; margin-top: 10px; }
+      .tips-grid { grid-template-columns: 1fr; gap: 10px; }
+      .tip-card { padding: 14px; border-radius: 10px; }
+      .tip-card .tip-icon { font-size: 1.3rem; }
+      .tip-card .tip-title { font-size: 0.85rem; }
+      .tip-card .tip-desc { font-size: 0.82rem; }
+      .footer { margin-top: 24px; font-size: 0.75rem; }
+    }
+    .back-home {
+      display: inline-block;
+      margin: 16px 0 0;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #555;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back-home:hover { color: #000; }
+    .back-home::before { content: '\2190\00a0'; }
+  </style>
+</head>
+<body>
+
+  <a class="back-home" href="index.html">All Recipes</a>
+
+  <!-- ===== HERO ===== -->
+  <div class="hero">
+    <div class="hero-illustration">
+      <svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">
+        <!-- Bowl shadow -->
+        <ellipse cx="100" cy="210" rx="70" ry="14" fill="#3E2723" opacity="0.25"/>
+        <!-- Bowl outer -->
+        <path d="M 25 120 Q 25 210 100 210 Q 175 210 175 120" fill="#EFEBE9" stroke="#8D6E63" stroke-width="2.5"/>
+        <ellipse cx="100" cy="120" rx="75" ry="22" fill="#D7CCC8" stroke="#8D6E63" stroke-width="2.5"/>
+        <!-- Porridge filling -->
+        <ellipse cx="100" cy="122" rx="65" ry="17" fill="#5D4037" opacity="0.85"/>
+        <!-- Chocolate swirl texture -->
+        <path d="M 65 118 Q 85 110 100 120 Q 115 130 135 118" fill="none" stroke="#3E2723" stroke-width="2" opacity="0.4"/>
+        <path d="M 75 125 Q 95 115 115 125" fill="none" stroke="#3E2723" stroke-width="1.5" opacity="0.3"/>
+        <!-- Banana slices on top -->
+        <ellipse cx="80" cy="117" rx="9" ry="5" fill="#FFD54F" stroke="#F9A825" stroke-width="1" transform="rotate(-10 80 117)"/>
+        <ellipse cx="80" cy="117" rx="3" ry="1.5" fill="#FFF9C4" transform="rotate(-10 80 117)"/>
+        <ellipse cx="120" cy="119" rx="8" ry="4.5" fill="#FFD54F" stroke="#F9A825" stroke-width="1" transform="rotate(12 120 119)"/>
+        <ellipse cx="120" cy="119" rx="2.5" ry="1.3" fill="#FFF9C4" transform="rotate(12 120 119)"/>
+        <!-- Chia seeds on top -->
+        <circle cx="90" cy="120" r="1.3" fill="#333"/>
+        <circle cx="98" cy="116" r="1" fill="#333"/>
+        <circle cx="108" cy="121" r="1.2" fill="#333"/>
+        <circle cx="130" cy="120" r="1" fill="#333"/>
+        <circle cx="72" cy="121" r="0.9" fill="#333"/>
+        <!-- Oat flakes on top -->
+        <ellipse cx="95" cy="118" rx="3" ry="1.2" fill="#D7CCC8" transform="rotate(20 95 118)"/>
+        <ellipse cx="112" cy="117" rx="2.5" ry="1" fill="#BCAAA4" transform="rotate(-15 112 117)"/>
+        <!-- Cocoa dust -->
+        <circle cx="88" cy="122" r="0.8" fill="#4E342E" opacity="0.4"/>
+        <circle cx="105" cy="116" r="0.6" fill="#4E342E" opacity="0.35"/>
+        <circle cx="75" cy="118" r="0.7" fill="#4E342E" opacity="0.3"/>
+        <!-- Spoon -->
+        <g transform="rotate(-25 155 95)">
+          <rect x="148" y="95" width="4" height="60" rx="2" fill="#BDBDBD" stroke="#999" stroke-width="0.5"/>
+          <ellipse cx="150" cy="92" rx="10" ry="7" fill="#BDBDBD" stroke="#999" stroke-width="0.5"/>
+          <ellipse cx="150" cy="92" rx="7" ry="5" fill="#A0A0A0" opacity="0.3"/>
+        </g>
+      </svg>
+    </div>
+    <div class="hero-overlay">
+      <h1>Protein Chocolate Banana Bowl<br>Clean &amp; All-Natural</h1>
+      <div class="subtitle">~63g protein, no added sugar &mdash; Prot&eacute;alpes isolate whey, banana, cocoa &amp; superfoods</div>
+    </div>
+  </div>
+
+  <!-- ===== META BADGES ===== -->
+  <div class="meta-row">
+    <div class="badge">
+      <div class="label">Prep Time</div>
+      <div class="value">3 min</div>
+    </div>
+    <div class="badge">
+      <div class="label">Cook Time</div>
+      <div class="value">None</div>
+    </div>
+    <div class="badge">
+      <div class="label">Total Time</div>
+      <div class="value">~3 min</div>
+    </div>
+    <div class="badge">
+      <div class="label">Servings</div>
+      <div class="value">1</div>
+    </div>
+  </div>
+
+  <!-- ===== NUTRITION ===== -->
+  <h2>&#x1F4CA; Nutrition (per bowl)</h2>
+  <div class="nutrition-grid">
+    <div class="nutri-card">
+      <div class="nutri-val">~525</div>
+      <div class="nutri-label">Calories</div>
+    </div>
+    <div class="nutri-card">
+      <div class="nutri-val">~63g</div>
+      <div class="nutri-label">Protein</div>
+    </div>
+    <div class="nutri-card">
+      <div class="nutri-val">~57g</div>
+      <div class="nutri-label">Carbs</div>
+    </div>
+    <div class="nutri-card">
+      <div class="nutri-val">~7g</div>
+      <div class="nutri-label">Fat</div>
+    </div>
+  </div>
+  <div class="nutri-note">
+    &#x1F33E; <strong>~12g of fiber</strong> from banana, cocoa, chia seeds &amp; oats. Only ~14g sugars (all from banana &mdash; zero added sugar).
+    Approximate values &mdash; may vary with exact brands and portion sizes.
+  </div>
+
+  <!-- ===== WHY THESE INGREDIENTS ===== -->
+  <h2>&#x1F9EA; Why These Ingredients</h2>
+  <p style="font-size:0.9rem; color:#666; margin-bottom:8px;">Every ingredient has been chosen for a reason &mdash; maximum nutrition, zero junk.</p>
+
+  <div class="ingredient-detail-grid">
+    <div class="ingredient-detail">
+      <div class="ing-icon">&#x1F34C;</div>
+      <div class="ing-name">Banana (1 medium)</div>
+      <div class="ing-desc">Natural sweetness without any added sugar. Rich in <strong>potassium</strong> (422 mg) for muscle function, <strong>vitamin B6</strong> for energy metabolism, and fast-digesting carbs for post-workout recovery. The fiber slows sugar absorption.</div>
+      <div class="ing-macros">105 kcal &middot; 27g carbs &middot; 1.3g protein</div>
+    </div>
+    <div class="ingredient-detail">
+      <div class="ing-icon">&#x1F4AA;</div>
+      <div class="ing-name">Prot&eacute;alpes Vanilla Isolate &times;2 scoops</div>
+      <div class="ing-desc"><strong>54g of pure protein</strong> from grass-fed whey isolate. Sugar-free range (gamme sans sucre): no sucralose, no aspartame, no maltodextrin. Only &sim;2g carbs, &sim;0.6g fat. Maximum bioavailability.</div>
+      <div class="ing-macros">~232 kcal &middot; 54g protein &middot; 0.6g fat</div>
+    </div>
+    <div class="ingredient-detail">
+      <div class="ing-icon">&#x1F36B;</div>
+      <div class="ing-name">Dark Cocoa Powder (1 tbsp)</div>
+      <div class="ing-desc">Unsweetened &mdash; rich chocolate flavour with <strong>zero sugar</strong>. Packed with <strong>flavonoids</strong> (powerful antioxidants), <strong>iron</strong> (0.8 mg), and <strong>magnesium</strong> (27 mg). Only 12 kcal per tablespoon.</div>
+      <div class="ing-macros">12 kcal &middot; 1g protein &middot; 2g fiber</div>
+    </div>
+    <div class="ingredient-detail">
+      <div class="ing-icon">&#x1F95B;</div>
+      <div class="ing-name">Oat Milk (1 tbsp)</div>
+      <div class="ing-desc">Just a splash to help the powders incorporate. Lower calorie than whole milk, and naturally sweet. You can substitute with any milk (almond, soy, cow&rsquo;s milk). The banana provides most of the moisture.</div>
+      <div class="ing-macros">~7 kcal &middot; 0.2g protein &middot; 1.2g carbs</div>
+    </div>
+    <div class="ingredient-detail">
+      <div class="ing-icon">&#x1FAD8;</div>
+      <div class="ing-name">Chia Seeds (1 tbsp) <span class="optional">&mdash; optional</span></div>
+      <div class="ing-desc">A superfood: <strong>2.1g omega-3 (ALA)</strong> per tablespoon, plus 4g fiber and <strong>76 mg calcium</strong>. They absorb liquid and create a thicker, more satisfying texture. Excellent source of antioxidants.</div>
+      <div class="ing-macros">58 kcal &middot; 2.5g protein &middot; 3.7g fat (omega-3)</div>
+    </div>
+    <div class="ingredient-detail">
+      <div class="ing-icon">&#x1F33E;</div>
+      <div class="ing-name">Oats (~30g)</div>
+      <div class="ing-desc"><strong>Complex carbohydrates</strong> for sustained energy release. Contains <strong>beta-glucan fiber</strong> which supports heart health and keeps you full longer. The generous portion gives a proper thick, porridge-like body to the bowl.</div>
+      <div class="ing-macros">56 kcal &middot; 2g protein &middot; 10g carbs</div>
+    </div>
+  </div>
+
+  <!-- ===== WHY PROTEALPES ===== -->
+  <h2>&#x2B50; Why Prot&eacute;alpes</h2>
+  <div class="info-box">
+    <h3>&#x1F1EB;&#x1F1F7; All-Natural Isolate Whey &mdash; Nothing Else</h3>
+    <p>
+      Prot&eacute;alpes is a French brand that stands out in a market full of over-processed protein powders. Here&rsquo;s why it&rsquo;s the right choice:
+    </p>
+    <ul>
+      <li><strong>Whey protein isolate</strong> &mdash; The purest form of whey with &gt;90% protein content. Lower lactose, lower fat than whey concentrate.</li>
+      <li><strong>Ultra-short ingredient list</strong> &mdash; Whey protein isolate, natural vanilla flavouring. That&rsquo;s it. No fillers, no thickeners, no gums.</li>
+      <li><strong>No artificial sweeteners</strong> &mdash; Their &ldquo;gamme sans sucre&rdquo; (sugar-free range) uses <em>zero</em> sucralose, aspartame, acesulfame-K, or stevia. If you want clean, this is as clean as it gets.</li>
+      <li><strong>No maltodextrin</strong> &mdash; Many &ldquo;protein&rdquo; blends pad their mix with cheap maltodextrin (basically sugar). Prot&eacute;alpes doesn&rsquo;t.</li>
+      <li><strong>No artificial colours or flavours</strong> &mdash; Only natural flavouring is used. The vanilla comes from real vanilla, not vanillin.</li>
+      <li><strong>French quality &amp; traceability</strong> &mdash; Made in France with European-sourced milk. Short supply chain, strict EU food regulations.</li>
+      <li><strong>High bioavailability</strong> &mdash; Isolate whey has the highest absorption rate among all protein types, making it ideal for post-workout recovery.</li>
+    </ul>
+    <p style="margin-top:12px;">
+      <strong>Bottom line:</strong> You can read the entire ingredient list in 5 seconds, and you can pronounce every single word. That&rsquo;s how protein powder should be.
+    </p>
+  </div>
+
+  <!-- ===== MICRONUTRIENTS ===== -->
+  <h2>&#x1F9EC; Key Micronutrients</h2>
+  <p style="font-size:0.88rem; color:#666; margin-bottom:4px;">Combined from all ingredients in one bowl:</p>
+
+  <div class="micro-grid">
+    <div class="micro-card">
+      <div class="micro-val">422 mg</div>
+      <div class="micro-label">Potassium</div>
+    </div>
+    <div class="micro-card">
+      <div class="micro-val">~136 mg</div>
+      <div class="micro-label">Magnesium</div>
+    </div>
+    <div class="micro-card">
+      <div class="micro-val">~2.8 mg</div>
+      <div class="micro-label">Iron</div>
+    </div>
+    <div class="micro-card">
+      <div class="micro-val">~316 mg</div>
+      <div class="micro-label">Calcium</div>
+    </div>
+    <div class="micro-card">
+      <div class="micro-val">~1.9 mg</div>
+      <div class="micro-label">Zinc</div>
+    </div>
+    <div class="micro-card">
+      <div class="micro-val">2.1g</div>
+      <div class="micro-label">Omega-3 (ALA)</div>
+    </div>
+    <div class="micro-card">
+      <div class="micro-val">0.43 mg</div>
+      <div class="micro-label">Vitamin B6</div>
+    </div>
+    <div class="micro-card">
+      <div class="micro-val">12g</div>
+      <div class="micro-label">Fiber</div>
+    </div>
+    <div class="micro-card">
+      <div class="micro-val">High</div>
+      <div class="micro-label">Flavonoids</div>
+    </div>
+  </div>
+  <div class="nutri-note" style="margin-top:10px;">
+    &#x1F4A1; <strong>Potassium</strong> &amp; <strong>magnesium</strong> support muscle recovery. <strong>Iron</strong> transports oxygen to your muscles. <strong>Omega-3</strong> from chia seeds fights inflammation. <strong>Flavonoids</strong> from cocoa are potent antioxidants linked to improved cardiovascular health.
+  </div>
+
+  <!-- ===== INGREDIENTS LIST ===== -->
+  <h2>&#x1F6D2; Ingredients</h2>
+  <div class="ingredients-section">
+    <div class="ingredient-group">
+      <h3>&#x1F963; Bowl</h3>
+      <ul>
+        <li>1 banana <em>(medium size)</em></li>
+        <li>2 scoops Prot&eacute;alpes vanilla isolate whey <em>(gamme sans sucre)</em></li>
+        <li>1 tablespoon dark cocoa powder <em>(unsweetened)</em></li>
+        <li>1 tablespoon oat milk <em>(or any milk of your choice)</em></li>
+        <li>~30g oats <em>(rolled or instant)</em></li>
+        <li>1 tablespoon chia seeds <span class="optional">(optional)</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== INSTRUCTIONS ===== -->
+  <h2>&#x1F468;&#x200D;&#x1F373; Step-by-Step Instructions</h2>
+
+  <!-- STEP 1 -->
+  <div class="step">
+    <div class="step-img" style="background: linear-gradient(135deg, #FFE082, #FFD54F);">
+      <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+        <!-- Cutting board -->
+        <rect x="30" y="85" width="140" height="12" rx="3" fill="#A1887F" opacity="0.5"/>
+        <!-- Banana -->
+        <path d="M 50 70 Q 70 30 100 35 Q 130 40 150 70" fill="#FFD54F" stroke="#F9A825" stroke-width="2"/>
+        <path d="M 55 68 Q 72 42 100 46 Q 128 50 145 68" fill="#FFF9C4" opacity="0.4"/>
+        <!-- Banana spots -->
+        <circle cx="80" cy="52" r="2" fill="#8D6E63" opacity="0.3"/>
+        <circle cx="110" cy="48" r="1.5" fill="#8D6E63" opacity="0.25"/>
+        <circle cx="130" cy="56" r="1.8" fill="#8D6E63" opacity="0.2"/>
+        <!-- Banana slices -->
+        <ellipse cx="60" cy="100" rx="8" ry="6" fill="#FFD54F" stroke="#F9A825" stroke-width="1"/>
+        <ellipse cx="60" cy="100" rx="3" ry="2" fill="#FFF9C4"/>
+        <ellipse cx="80" cy="102" rx="8" ry="6" fill="#FFD54F" stroke="#F9A825" stroke-width="1"/>
+        <ellipse cx="80" cy="102" rx="3" ry="2" fill="#FFF9C4"/>
+        <ellipse cx="100" cy="100" rx="8" ry="6" fill="#FFD54F" stroke="#F9A825" stroke-width="1"/>
+        <ellipse cx="100" cy="100" rx="3" ry="2" fill="#FFF9C4"/>
+        <!-- Knife -->
+        <rect x="125" y="72" width="3" height="30" rx="1" fill="#795548"/>
+        <path d="M 120 72 L 135 72 L 128 50 Z" fill="#B0BEC5" stroke="#90A4AE" stroke-width="0.5"/>
+      </svg>
+    </div>
+    <div class="step-body">
+      <span class="step-number">1</span>
+      <span class="step-title">Prep the Ingredients</span>
+      <span class="step-time">1 min</span>
+      <div class="step-text">
+        <ul>
+          <li><strong>Peel</strong> the banana and set aside &mdash; you&rsquo;ll crush it with a fork in the next step.</li>
+          <li>Measure out <strong>2 scoops</strong> of Prot&eacute;alpes vanilla isolate whey.</li>
+          <li>Measure <strong>1 tablespoon</strong> of dark cocoa powder (unsweetened) and <strong>1 tablespoon</strong> of chia seeds.</li>
+          <li>Have your <strong>1 tablespoon of oat milk</strong> and <strong>~30g oats</strong> ready.</li>
+        </ul>
+      </div>
+      <div class="step-tip">
+        <strong>&#x1F4A1; Tip:</strong> A just-yellow banana keeps the sweetness in check. Too ripe and the cocoa flavour gets lost. Any ripeness crushes fine with a fork.
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step">
+    <div class="step-img" style="background: linear-gradient(135deg, #8D6E63, #5D4037);">
+      <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+        <!-- Bowl -->
+        <ellipse cx="100" cy="115" rx="60" ry="12" fill="#5D4037" opacity="0.3"/>
+        <path d="M 40 70 Q 40 125 100 125 Q 160 125 160 70" fill="#EFEBE9" stroke="#8D6E63" stroke-width="2"/>
+        <ellipse cx="100" cy="70" rx="60" ry="15" fill="#D7CCC8" stroke="#8D6E63" stroke-width="2"/>
+        <!-- Mixture inside bowl -->
+        <ellipse cx="100" cy="72" rx="52" ry="11" fill="#5D4037" opacity="0.7"/>
+        <!-- Banana mash texture -->
+        <ellipse cx="85" cy="70" rx="8" ry="3" fill="#FFD54F" opacity="0.4" transform="rotate(-10 85 70)"/>
+        <ellipse cx="110" cy="73" rx="6" ry="2.5" fill="#FFD54F" opacity="0.35" transform="rotate(15 110 73)"/>
+        <!-- Oat flakes -->
+        <ellipse cx="95" cy="71" rx="3" ry="1.2" fill="#BCAAA4" opacity="0.5"/>
+        <ellipse cx="108" cy="69" rx="2.5" ry="1" fill="#BCAAA4" opacity="0.45"/>
+        <!-- Chia seeds -->
+        <circle cx="90" cy="73" r="1" fill="#333" opacity="0.5"/>
+        <circle cx="103" cy="70" r="0.8" fill="#333" opacity="0.45"/>
+        <!-- Fork -->
+        <g transform="rotate(-30 155 40)">
+          <rect x="152" y="40" width="3" height="65" rx="1.5" fill="#BDBDBD" stroke="#999" stroke-width="0.5"/>
+          <!-- Tines -->
+          <rect x="145" y="25" width="2.5" height="18" rx="1" fill="#BDBDBD" stroke="#999" stroke-width="0.5"/>
+          <rect x="149.5" y="23" width="2.5" height="20" rx="1" fill="#BDBDBD" stroke="#999" stroke-width="0.5"/>
+          <rect x="154" y="23" width="2.5" height="20" rx="1" fill="#BDBDBD" stroke="#999" stroke-width="0.5"/>
+          <rect x="158.5" y="25" width="2.5" height="18" rx="1" fill="#BDBDBD" stroke="#999" stroke-width="0.5"/>
+        </g>
+        <!-- Motion lines -->
+        <line x1="60" y1="60" x2="55" y2="55" stroke="#8D6E63" stroke-width="1" opacity="0.3"/>
+        <line x1="140" y1="60" x2="145" y2="55" stroke="#8D6E63" stroke-width="1" opacity="0.3"/>
+        <line x1="100" y1="58" x2="100" y2="52" stroke="#8D6E63" stroke-width="1" opacity="0.3"/>
+      </svg>
+    </div>
+    <div class="step-body">
+      <span class="step-number">2</span>
+      <span class="step-title">Crush &amp; Mix</span>
+      <span class="step-time">1 min</span>
+      <div class="step-text">
+        <ul>
+          <li>Peel the banana into a <strong>bowl</strong> and <strong>crush it thoroughly with a fork</strong> until you get a smooth mash.</li>
+          <li>Add the <strong>oat milk</strong> (just 1 tablespoon) and stir with the fork to loosen the banana mash slightly.</li>
+          <li>Add the <strong>protein powder</strong>, <strong>cocoa powder</strong>, <strong>oats</strong>, and <strong>chia seeds</strong>.</li>
+          <li>Mix vigorously with the fork for <strong>30&ndash;45 seconds</strong> until everything is well combined into a <strong>thick porridge</strong>.</li>
+          <li>If you can&rsquo;t mix through the dry parts, add <strong>1 more teaspoon of milk</strong> at a time. It should stay thick and spoonable.</li>
+        </ul>
+      </div>
+      <div class="step-tip">
+        <strong>&#x1F4A1; Tip:</strong> Crush the banana first before adding the powders &mdash; it&rsquo;s much easier to get a smooth, lump-free mix this way.
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step">
+    <div class="step-img" style="background: linear-gradient(135deg, #A1887F, #D7CCC8);">
+      <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+        <!-- Bowl shadow -->
+        <ellipse cx="100" cy="125" rx="58" ry="10" fill="#5D4037" opacity="0.2"/>
+        <!-- Bowl -->
+        <path d="M 35 65 Q 35 120 100 120 Q 165 120 165 65" fill="#EFEBE9" stroke="#8D6E63" stroke-width="2"/>
+        <ellipse cx="100" cy="65" rx="65" ry="18" fill="#D7CCC8" stroke="#8D6E63" stroke-width="2"/>
+        <!-- Porridge inside -->
+        <ellipse cx="100" cy="67" rx="56" ry="14" fill="#5D4037" opacity="0.8"/>
+        <!-- Texture swirl -->
+        <path d="M 70 64 Q 90 58 105 66 Q 120 74 140 64" fill="none" stroke="#3E2723" stroke-width="1.5" opacity="0.3"/>
+        <!-- Banana slices -->
+        <ellipse cx="82" cy="63" rx="7" ry="4" fill="#FFD54F" stroke="#F9A825" stroke-width="0.8" transform="rotate(-8 82 63)"/>
+        <ellipse cx="82" cy="63" rx="2.5" ry="1.2" fill="#FFF9C4" transform="rotate(-8 82 63)"/>
+        <ellipse cx="118" cy="65" rx="6" ry="3.5" fill="#FFD54F" stroke="#F9A825" stroke-width="0.8" transform="rotate(10 118 65)"/>
+        <ellipse cx="118" cy="65" rx="2" ry="1" fill="#FFF9C4" transform="rotate(10 118 65)"/>
+        <!-- Chia seeds -->
+        <circle cx="95" cy="64" r="1" fill="#333" opacity="0.6"/>
+        <circle cx="105" cy="62" r="0.8" fill="#333" opacity="0.5"/>
+        <circle cx="130" cy="66" r="0.9" fill="#333" opacity="0.5"/>
+        <!-- Oat flakes -->
+        <ellipse cx="90" cy="66" rx="2" ry="0.8" fill="#BCAAA4" transform="rotate(15 90 66)"/>
+        <!-- Cocoa dust -->
+        <circle cx="100" cy="63" r="0.7" fill="#4E342E" opacity="0.4"/>
+        <circle cx="75" cy="66" r="0.5" fill="#4E342E" opacity="0.3"/>
+        <!-- Spoon -->
+        <g transform="rotate(-20 150 50)">
+          <rect x="146" y="50" width="3" height="45" rx="1.5" fill="#BDBDBD" stroke="#999" stroke-width="0.5"/>
+          <ellipse cx="147.5" cy="48" rx="8" ry="5.5" fill="#BDBDBD" stroke="#999" stroke-width="0.5"/>
+        </g>
+        <!-- Sparkle decorations -->
+        <text x="155" y="55" font-size="12" opacity="0.5">&#x2728;</text>
+        <text x="30" y="75" font-size="9" opacity="0.4">&#x2728;</text>
+      </svg>
+    </div>
+    <div class="step-body">
+      <span class="step-number">3</span>
+      <span class="step-title">Top &amp; Enjoy</span>
+      <span class="step-time">30 sec</span>
+      <div class="step-text">
+        <ul>
+          <li>Optionally <strong>top with a few rolled oats, chia seeds, banana slices, and a dust of cocoa powder</strong> for presentation.</li>
+          <li>Eat with a spoon &mdash; enjoy it <strong>fresh</strong> or <strong>cover and refrigerate overnight</strong> for a ready-to-eat breakfast.</li>
+          <li>That&rsquo;s it &mdash; <strong>~63g of protein</strong> in under 3 minutes. &#x1F4AA;</li>
+        </ul>
+      </div>
+      <div class="step-tip">
+        <strong>&#x1F4A1; Tip:</strong> Works great as overnight prep &mdash; chia seeds and oats absorb the liquid and thicken into a dense, pudding-like texture by morning. Just stir and eat cold, or warm it up briefly.
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PRO TIPS ===== -->
+  <h2>&#x1F4A1; Pro Tips</h2>
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-icon">&#x1F34C;</div>
+      <div class="tip-title">Banana Ripeness</div>
+      <div class="tip-desc">A slightly green or just-yellow banana keeps the sweetness balanced &mdash; fully ripe bananas can make it overwhelmingly sweet. Less ripe ones are firmer but crush fine with a fork.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">&#x23F0;</div>
+      <div class="tip-title">Post-Workout</div>
+      <div class="tip-desc">Ideal within 30 minutes after training. The fast-digesting whey isolate + banana carbs = rapid muscle recovery.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">&#x1F30D;</div>
+      <div class="tip-title">Milk Alternatives</div>
+      <div class="tip-desc">Oat milk works great, but almond milk (even fewer calories) or cow&rsquo;s milk (more protein) are excellent alternatives.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">&#x1F33F;</div>
+      <div class="tip-title">Level Up</div>
+      <div class="tip-desc">Add a tablespoon of peanut butter (+8g protein, +healthy fats) or a handful of spinach (invisible in taste, adds iron &amp; folate).</div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <div class="footer">
+    Protein Chocolate Banana Bowl &mdash; Clean Fuel &bull; All-Natural Ingredients &bull; ~63g Protein
+  </div>
+
+</body>
+</html>
