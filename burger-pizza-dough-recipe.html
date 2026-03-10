@@ -461,16 +461,26 @@
       .footer { margin-top: 24px; font-size: 0.75rem; }
     }
     .back-home {
-      display: inline-block;
-      margin: 16px 0 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: block;
+      padding: 12px 20px;
       font-size: 0.95rem;
       font-weight: 600;
-      color: #555;
+      color: #5C3A1E;
       text-decoration: none;
+      background: rgba(250,243,235,0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
       transition: color 0.2s;
     }
-    .back-home:hover { color: #000; }
+    .back-home:hover { color: #8B4513; }
     .back-home::before { content: '\2190\00a0'; }
+    body { padding-top: 48px; }
   </style>
 </head>
 <body>
