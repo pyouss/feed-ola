@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kitchen Tips — Feed Ola</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.7;
+      color: #2d2d2d;
+      background: #f8f5f0;
+      min-height: 100vh;
+    }
+
+    /* ===== BACK LINK ===== */
+    .back-home {
+      display: inline-block;
+      margin: 16px 0 0 20px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #8B6F52;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back-home:hover { color: #5C3A1E; }
+    .back-home::before { content: '\2190\00a0'; }
+
+    /* ===== HEADER ===== */
+    .page-header {
+      text-align: center;
+      padding: 40px 20px 32px;
+      background: #faf3eb;
+    }
+    .page-header h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: #5C3A1E;
+      margin-bottom: 8px;
+    }
+    .page-header p {
+      font-size: 0.95rem;
+      color: #8B6F52;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* ===== SEARCH BAR ===== */
+    .search-wrap {
+      max-width: 800px;
+      margin: -24px auto 0;
+      padding: 0 20px;
+      position: relative;
+      z-index: 2;
+    }
+    .search-bar {
+      width: 100%;
+      padding: 16px 20px 16px 50px;
+      font-size: 1rem;
+      font-family: inherit;
+      border: none;
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      outline: none;
+      transition: box-shadow 0.3s;
+    }
+    .search-bar:focus {
+      box-shadow: 0 4px 24px rgba(139,79,35,0.18);
+    }
+    .search-bar::placeholder { color: #c4b5a4; }
+    .search-icon {
+      position: absolute;
+      left: 38px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      color: #c4b5a4;
+    }
+
+    /* ===== FILTER CHIPS ===== */
+    .filters {
+      max-width: 800px;
+      margin: 24px auto 8px;
+      padding: 0 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .chip {
+      padding: 7px 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      border: 2px solid #e0d5c8;
+      border-radius: 50px;
+      background: transparent;
+      color: #8B6F52;
+      cursor: pointer;
+      transition: all 0.25s;
+      font-family: inherit;
+    }
+    .chip:hover { border-color: #8B6F52; }
+    .chip.active {
+      background: #5C3A1E;
+      border-color: #5C3A1E;
+      color: #fff;
+    }
+
+    /* ===== TIPS COUNTER ===== */
+    .tips-counter {
+      max-width: 800px;
+      margin: 20px auto 0;
+      padding: 0 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #bba58f;
+      letter-spacing: 1px;
+    }
+
+    /* ===== TIPS LIST ===== */
+    .tips-list {
+      max-width: 800px;
+      margin: 16px auto 60px;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .tip-card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      transition: transform 0.3s, box-shadow 0.3s, opacity 0.3s;
+      cursor: pointer;
+    }
+    .tip-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.1);
+    }
+    .tip-card.hidden {
+      display: none;
+    }
+
+    .tip-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 22px;
+      user-select: none;
+    }
+    .tip-icon {
+      font-size: 1.6rem;
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #faf3eb;
+      border-radius: 12px;
+    }
+    .tip-title {
+      flex: 1;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #3a2a1a;
+    }
+    .tip-category {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: #f2eeea;
+      color: #aaa;
+      flex-shrink: 0;
+    }
+    .tip-chevron {
+      width: 20px;
+      height: 20px;
+      color: #ccc;
+      transition: transform 0.3s;
+      flex-shrink: 0;
+    }
+    .tip-card.open .tip-chevron {
+      transform: rotate(180deg);
+    }
+
+    .tip-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(.25,.8,.25,1), padding 0.3s;
+    }
+    .tip-card.open .tip-body {
+      max-height: 600px;
+    }
+    .tip-body-inner {
+      padding: 0 22px 20px;
+      padding-left: 80px;
+      font-size: 0.92rem;
+      color: #5a4a3a;
+      line-height: 1.8;
+    }
+    .tip-body-inner strong {
+      color: #5C3A1E;
+    }
+    .tip-body-inner .highlight {
+      display: inline;
+      background: linear-gradient(transparent 60%, #f9e4c8 60%);
+      font-weight: 600;
+    }
+
+    /* ===== DID YOU KNOW BANNER ===== */
+    .random-tip-banner {
+      max-width: 800px;
+      margin: 0 auto 28px;
+      padding: 0 20px;
+    }
+    .random-tip-box {
+      background: linear-gradient(135deg, #5C3A1E 0%, #8B5E3C 100%);
+      border-radius: 16px;
+      padding: 24px 28px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .random-tip-box:hover { transform: scale(1.01); }
+    .random-tip-box::before {
+      content: '💡';
+      position: absolute;
+      top: -10px; right: -10px;
+      font-size: 5rem;
+      opacity: 0.08;
+    }
+    .random-tip-label {
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 8px;
+    }
+    .random-tip-text {
+      font-size: 1.05rem;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+    .random-tip-tap {
+      font-size: 0.75rem;
+      opacity: 0.4;
+      margin-top: 10px;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      text-align: center;
+      padding: 32px 20px;
+      font-size: 0.82rem;
+      color: #bba58f;
+      letter-spacing: 1px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 500px) {
+      .page-header h1 { font-size: 1.8rem; }
+      .page-header { padding: 28px 16px 24px; }
+      .tip-body-inner { padding-left: 22px; }
+      .tip-category { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="back-home" href="index.html">Feed Ola</a>
+
+  <header class="page-header">
+    <h1>Kitchen Tips</h1>
+    <p>Useful things to know for healthier, smarter cooking</p>
+  </header>
+
+  <!-- ===== SEARCH ===== -->
+  <div class="search-wrap">
+    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    <input class="search-bar" type="text" id="searchInput" placeholder="Search tips...">
+  </div>
+
+  <!-- ===== FILTER CHIPS ===== -->
+  <div class="filters" id="filters">
+    <button class="chip active" data-cat="all">All</button>
+    <button class="chip" data-cat="nutrition">Nutrition</button>
+    <button class="chip" data-cat="cooking">Cooking</button>
+    <button class="chip" data-cat="ingredients">Ingredients</button>
+    <button class="chip" data-cat="meal-prep">Meal Prep</button>
+    <button class="chip" data-cat="protein">Protein</button>
+  </div>
+
+  <!-- ===== COUNTER ===== -->
+  <div class="tips-counter" id="tipsCounter"></div>
+
+  <!-- ===== RANDOM TIP BANNER ===== -->
+  <div class="random-tip-banner">
+    <div class="random-tip-box" id="randomTip">
+      <div class="random-tip-label">Did you know?</div>
+      <div class="random-tip-text" id="randomTipText"></div>
+      <div class="random-tip-tap">Click for another tip</div>
+    </div>
+  </div>
+
+  <!-- ===== TIPS LIST ===== -->
+  <div class="tips-list" id="tipsList"></div>
+
+  <div class="footer">Made with love for Ola</div>
+
+<script>
+const TIPS = [
+  {
+    icon: "🫒",
+    title: "Oil is sneaky calories",
+    category: "nutrition",
+    body: "Even <strong>olive oil</strong> (considered a healthy fat) packs <span class='highlight'>~120 kcal per tablespoon</span>. A heavy pour while cooking can add 300–500 kcal without you noticing. Measure it or use a spray bottle to keep macros on track."
+  },
+  {
+    icon: "🍗",
+    title: "Chicken breast vs. thigh",
+    category: "protein",
+    body: "Chicken breast has <span class='highlight'>~31g protein per 100g</span> with only 3.6g fat. Thighs are tastier but have 2–3x more fat. For lean cuts, always go breast — and pound it flat for faster, more even cooking."
+  },
+  {
+    icon: "⚖️",
+    title: "Weigh your food cooked vs. raw",
+    category: "nutrition",
+    body: "Nutrition labels usually show values for <strong>raw/uncooked</strong> food. Rice and pasta roughly <span class='highlight'>double in weight</span> when cooked (absorbing water). 100g raw rice ≈ 200g cooked. If you weigh cooked, you'll overestimate calories."
+  },
+  {
+    icon: "🔥",
+    title: "Don't cook with extra virgin olive oil at high heat",
+    category: "cooking",
+    body: "Extra virgin olive oil has a <span class='highlight'>smoke point of ~190°C</span>. For high-heat searing or stir-frying, use avocado oil, light olive oil, or coconut oil instead. Save the good EVOO for dressings and finishing."
+  },
+  {
+    icon: "🥚",
+    title: "Eggs are the ultimate cheap protein",
+    category: "protein",
+    body: "One large egg = <span class='highlight'>6g protein, ~70 kcal</span>. The yolk has most of the nutrients (vitamins A, D, B12, choline). Don't fear the yolk — but if cutting calories, use 1 whole egg + extra whites."
+  },
+  {
+    icon: "🫘",
+    title: "Lentils are a protein + carb hybrid",
+    category: "ingredients",
+    body: "Red lentils pack <span class='highlight'>~25g protein per 100g (dry)</span>. But they also have ~60g carbs. They're not a pure protein source — count them as both. Great for bulking meals cheaply."
+  },
+  {
+    icon: "📦",
+    title: "Prep in bulk, eat all week",
+    category: "meal-prep",
+    body: "Cook your protein and grains on <strong>Sunday</strong>. Portion into containers. Meals last <span class='highlight'>4–5 days in the fridge</span>. This removes daily decision fatigue and keeps you from ordering takeout."
+  },
+  {
+    icon: "🧂",
+    title: "Salt your pasta water properly",
+    category: "cooking",
+    body: "Your pasta water should taste like the <span class='highlight'>sea — about 1 tbsp per litre</span>. This is the only chance to season the pasta itself from inside. Under-salted water = bland pasta no matter what sauce you use."
+  },
+  {
+    icon: "🥤",
+    title: "Liquid calories add up fast",
+    category: "nutrition",
+    body: "A glass of orange juice has <span class='highlight'>~110 kcal and 26g sugar</span> — almost the same as a soda. Eat the whole fruit instead: more fiber, more filling, fewer calories absorbed."
+  },
+  {
+    icon: "🍚",
+    title: "Rice: the macro base champion",
+    category: "ingredients",
+    body: "White rice is <span class='highlight'>~130 kcal per 100g cooked</span> with almost no fat. Basmati has a lower glycemic index than short-grain. For extra nutrition, try mixing in cauliflower rice to cut calories in half."
+  },
+  {
+    icon: "🥩",
+    title: "Rest your meat after cooking",
+    category: "cooking",
+    body: "Let meat rest for <span class='highlight'>5–10 minutes</span> after cooking. The juices redistribute, keeping it moist. Cutting too early = juices run out = dry meat. Tent loosely with foil."
+  },
+  {
+    icon: "🧊",
+    title: "Freeze portions in flat bags",
+    category: "meal-prep",
+    body: "Flatten food in zip-lock bags before freezing. They <span class='highlight'>stack like books</span>, thaw 3x faster, and save freezer space. Label with the date and meal name using a marker."
+  },
+  {
+    icon: "🥑",
+    title: "Avocado — healthy but calorie-dense",
+    category: "nutrition",
+    body: "Half an avocado = <span class='highlight'>~160 kcal and 15g fat</span>. The fats are heart-healthy (monounsaturated), but if you're counting calories, be mindful of portions. A quarter is often enough for topping."
+  },
+  {
+    icon: "🫙",
+    title: "Greek yogurt is a macro cheat code",
+    category: "protein",
+    body: "Plain Greek yogurt (0% fat) has <span class='highlight'>~10g protein per 100g</span> with only 59 kcal. Use it as a base for sauces, smoothie bowls, or mix with honey for dessert. Way better than regular yogurt."
+  },
+  {
+    icon: "🧅",
+    title: "Onion and garlic: always start low",
+    category: "cooking",
+    body: "Sauté onion and garlic on <span class='highlight'>medium-low heat</span>. High heat burns garlic in seconds (it goes bitter). Start onions first (3–4 min), then add garlic for just 30–60 seconds before adding other ingredients."
+  },
+  {
+    icon: "📝",
+    title: "Track for a week, then estimate",
+    category: "nutrition",
+    body: "You don't need to track macros forever. <span class='highlight'>Track strictly for 1–2 weeks</span> to learn portion sizes, then you'll be able to eyeball meals accurately. It's a skill, not a lifestyle chain."
+  }
+];
+
+// ===== RENDER TIPS =====
+const tipsList = document.getElementById('tipsList');
+const searchInput = document.getElementById('searchInput');
+const filtersEl = document.getElementById('filters');
+const counterEl = document.getElementById('tipsCounter');
+
+let activeCategory = 'all';
+
+function renderTips() {
+  tipsList.innerHTML = '';
+  const query = searchInput.value.toLowerCase().trim();
+
+  let count = 0;
+  TIPS.forEach((tip, i) => {
+    const matchesCat = activeCategory === 'all' || tip.category === activeCategory;
+    const matchesSearch = !query ||
+      tip.title.toLowerCase().includes(query) ||
+      tip.body.toLowerCase().includes(query) ||
+      tip.category.toLowerCase().includes(query);
+
+    if (!matchesCat || !matchesSearch) return;
+    count++;
+
+    const card = document.createElement('div');
+    card.className = 'tip-card';
+    card.setAttribute('data-index', i);
+    card.innerHTML = `
+      <div class="tip-header">
+        <div class="tip-icon">${tip.icon}</div>
+        <div class="tip-title">${highlightSearch(tip.title, query)}</div>
+        <span class="tip-category">${tip.category.replace('-', ' ')}</span>
+        <svg class="tip-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="tip-body">
+        <div class="tip-body-inner">${tip.body}</div>
+      </div>
+    `;
+    card.querySelector('.tip-header').addEventListener('click', () => {
+      card.classList.toggle('open');
+    });
+    tipsList.appendChild(card);
+  });
+
+  counterEl.textContent = count + ' tip' + (count !== 1 ? 's' : '');
+}
+
+function highlightSearch(text, query) {
+  if (!query) return text;
+  const safeQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const regex = new RegExp('(' + safeQuery + ')', 'gi');
+  return text.replace(regex, '<mark style="background:#f9e4c8;color:#5C3A1E;border-radius:3px;padding:0 2px">$1</mark>');
+}
+
+// ===== FILTER CHIPS =====
+filtersEl.addEventListener('click', (e) => {
+  if (!e.target.classList.contains('chip')) return;
+  filtersEl.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  e.target.classList.add('active');
+  activeCategory = e.target.dataset.cat;
+  renderTips();
+});
+
+// ===== SEARCH =====
+searchInput.addEventListener('input', renderTips);
+
+// ===== RANDOM TIP BANNER =====
+const randomTipText = document.getElementById('randomTipText');
+const randomTipBox = document.getElementById('randomTip');
+let lastRandomIndex = -1;
+
+function showRandomTip() {
+  let idx;
+  do { idx = Math.floor(Math.random() * TIPS.length); } while (idx === lastRandomIndex && TIPS.length > 1);
+  lastRandomIndex = idx;
+  randomTipText.textContent = TIPS[idx].icon + '  ' + TIPS[idx].title + ' — ' + TIPS[idx].body.replace(/<[^>]*>/g, '');
+}
+randomTipBox.addEventListener('click', showRandomTip);
+showRandomTip();
+
+// ===== KEYBOARD SHORTCUT =====
+document.addEventListener('keydown', (e) => {
+  if (e.key === '/' && document.activeElement !== searchInput) {
+    e.preventDefault();
+    searchInput.focus();
+  }
+  if (e.key === 'Escape') {
+    searchInput.value = '';
+    searchInput.blur();
+    renderTips();
+  }
+});
+
+// ===== INIT =====
+renderTips();
+</script>
+
+</body>
+</html>
