@@ -21,37 +21,29 @@
     .hero-header {
       position: relative;
       text-align: center;
-      padding: 80px 20px 60px;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+      padding: 50px 20px 48px;
+      background: #faf3eb;
       overflow: hidden;
     }
-    .hero-header::before {
-      content: '';
-      position: absolute;
-      top: -50%; left: -50%;
-      width: 200%; height: 200%;
-      background: radial-gradient(circle at 30% 70%, rgba(228,134,84,0.15) 0%, transparent 50%),
-                  radial-gradient(circle at 70% 30%, rgba(196,69,54,0.12) 0%, transparent 50%);
-      animation: drift 20s ease-in-out infinite alternate;
-    }
-    @keyframes drift {
-      0% { transform: translate(0, 0) rotate(0deg); }
-      100% { transform: translate(-30px, 20px) rotate(3deg); }
+    .hero-logo {
+      width: 160px;
+      height: 160px;
+      margin: 0 auto 20px;
     }
     .hero-header h1 {
       position: relative;
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 3.5rem;
+      font-size: 3rem;
       font-weight: 900;
-      color: #fff;
+      color: #5C3A1E;
       letter-spacing: -1px;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
     .hero-header .tagline {
       position: relative;
-      font-size: 1.05rem;
-      font-weight: 400;
-      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #8B6F52;
       letter-spacing: 3px;
       text-transform: uppercase;
     }
@@ -59,8 +51,8 @@
       display: block;
       width: 50px;
       height: 3px;
-      background: linear-gradient(90deg, #e48454, #c44536);
-      margin: 20px auto 0;
+      background: linear-gradient(90deg, #d4a574, #8B4513);
+      margin: 18px auto 0;
       border-radius: 2px;
     }
 
@@ -158,14 +150,15 @@
       text-align: center;
       padding: 32px 20px;
       font-size: 0.82rem;
-      color: #bbb;
+      color: #bba58f;
       letter-spacing: 1px;
     }
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 500px) {
-      .hero-header h1 { font-size: 2.4rem; }
-      .hero-header { padding: 60px 16px 44px; }
+      .hero-header h1 { font-size: 2.2rem; }
+      .hero-header { padding: 36px 16px 36px; }
+      .hero-logo { width: 120px; height: 120px; }
       .recipes-grid { grid-template-columns: 1fr; }
     }
   </style>
@@ -173,6 +166,47 @@
 <body>
 
   <header class="hero-header">
+    <div class="hero-logo">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <!-- Circle border -->
+        <circle cx="100" cy="100" r="90" fill="none" stroke="#6B3F23" stroke-width="5"/>
+        <!-- Bear body -->
+        <ellipse cx="100" cy="118" rx="52" ry="50" fill="#E8D5B7"/>
+        <!-- Left ear -->
+        <circle cx="68" cy="52" r="18" fill="#E8D5B7" stroke="#6B3F23" stroke-width="4"/>
+        <circle cx="68" cy="52" r="10" fill="#D4B896"/>
+        <!-- Right ear -->
+        <circle cx="132" cy="52" r="18" fill="#E8D5B7" stroke="#6B3F23" stroke-width="4"/>
+        <circle cx="132" cy="52" r="10" fill="#D4B896"/>
+        <!-- Head -->
+        <circle cx="100" cy="82" r="38" fill="#E8D5B7" stroke="#6B3F23" stroke-width="4"/>
+        <!-- Eyes (closed, happy) -->
+        <path d="M 82 78 Q 86 73 90 78" fill="none" stroke="#6B3F23" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M 110 78 Q 114 73 118 78" fill="none" stroke="#6B3F23" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- Nose -->
+        <ellipse cx="100" cy="88" rx="5" ry="3.5" fill="#8B6243"/>
+        <!-- Smile -->
+        <path d="M 94 93 Q 100 99 106 93" fill="none" stroke="#6B3F23" stroke-width="2" stroke-linecap="round"/>
+        <!-- Blush -->
+        <circle cx="78" cy="88" r="5" fill="#E8B89D" opacity="0.6"/>
+        <circle cx="122" cy="88" r="5" fill="#E8B89D" opacity="0.6"/>
+        <!-- Left arm -->
+        <path d="M 70 120 Q 55 135 65 155" fill="none" stroke="#6B3F23" stroke-width="3.5" stroke-linecap="round"/>
+        <!-- Right arm holding bowl -->
+        <path d="M 130 120 Q 148 132 140 150" fill="none" stroke="#6B3F23" stroke-width="3.5" stroke-linecap="round"/>
+        <!-- Bowl -->
+        <ellipse cx="135" cy="148" rx="22" ry="8" fill="#F5E6D0" stroke="#6B3F23" stroke-width="2.5"/>
+        <path d="M 113 148 Q 115 170 135 170 Q 155 170 157 148" fill="#F5E6D0" stroke="#6B3F23" stroke-width="2.5"/>
+        <!-- Food in bowl -->
+        <circle cx="128" cy="145" r="4" fill="#C0392B" opacity="0.7"/>
+        <circle cx="138" cy="143" r="3" fill="#27AE60" opacity="0.7"/>
+        <circle cx="133" cy="147" r="3.5" fill="#E67E22" opacity="0.7"/>
+        <!-- Steam -->
+        <path d="M 125 132 Q 122 125 125 118" fill="none" stroke="#C4A882" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+        <path d="M 135 130 Q 132 122 135 114" fill="none" stroke="#C4A882" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+        <path d="M 145 132 Q 142 125 145 118" fill="none" stroke="#C4A882" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      </svg>
+    </div>
     <h1>Feed Ola</h1>
     <div class="tagline">homemade &amp; high protein</div>
     <span class="accent-line"></span>
